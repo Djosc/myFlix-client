@@ -10,13 +10,13 @@ export function RegistrationView(props) {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		props.onRegister(true, username);
+		props.onRegister(true);
 	};
 
-	const handleExistingUser = (e) => {
-		e.preventDefault();
-		props.onExistingUser(true);
-	};
+	// const handleExistingUser = (e) => {
+	// 	e.preventDefault();
+	// 	props.onExistingUser(true);
+	// };
 
 	return (
 		<div className="registration-view">
@@ -58,7 +58,7 @@ export function RegistrationView(props) {
 
 			<label>
 				Existing User?
-				<button type="submit" onClick={handleExistingUser}>
+				<button type="submit" onClick={handleSubmit}>
 					Login
 				</button>
 			</label>
@@ -67,6 +67,5 @@ export function RegistrationView(props) {
 }
 
 RegistrationView.propTypes = {
-	onExistingUser: PropTypes.func.isRequired,
 	onRegister: PropTypes.func.isRequired,
 };
