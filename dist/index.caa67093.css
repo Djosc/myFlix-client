@@ -2,4 +2,13 @@
   color: steelblue;
 }
 
+.login-form {
+  margin: 0 auto;
+  width: 40vw;
+  height: 40vw;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+}
 /*# sourceMappingURL=index.caa67093.css.map */
