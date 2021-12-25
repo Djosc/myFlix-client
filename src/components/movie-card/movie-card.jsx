@@ -11,11 +11,11 @@ class MovieCard extends React.Component {
 
 		return (
 			<Card>
-				<Card.Img variant="top" src={movieData.ImagePath} />
+				<Card.Img variant="top" src={movieData.ImagePath} crossOrigin="anonymous" />
 				<Card.Body>
 					<Card.Title>{movieData.Title}</Card.Title>
 					<Card.Text>{movieData.Description}</Card.Text>
-					<Button onClick={() => onMovieClick(movie)} variant="link">
+					<Button onClick={() => onMovieClick(movieData)} variant="link">
 						More Info
 					</Button>
 				</Card.Body>
