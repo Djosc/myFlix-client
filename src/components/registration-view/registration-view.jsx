@@ -14,6 +14,11 @@ export function RegistrationView(props) {
 		props.onRegister(true);
 	};
 
+	const handleNewUser = (e) => {
+		e.preventDefault();
+		props.onRegister(false);
+	};
+
 	return (
 		<Container>
 			<Row className="justify-content-center" style={{ marginTop: '15%' }}>

@@ -17,11 +17,16 @@ export function LoginView(props) {
 		props.onLoggedIn(username);
 	};
 
+	const handleNewUser = (e) => {
+		e.preventDefault();
+		props.onRegister(false);
+	};
+
 	return (
 		<Container>
 			<div className="login-form">
 				<Row className="justify-content-center" style={{ marginTop: '20%' }}>
-					<Col lg={6} md={8}>
+					<Col lg={6} md={8} className="text-center">
 						<Card>
 							<Card.Body className="text-center">
 								<Card.Title as="h2" className="text-center">
@@ -59,6 +64,9 @@ export function LoginView(props) {
 								</Button>
 							</Card.Body>
 						</Card>
+						<Button variant="link" className="pt-3" onClick={handleNewUser}>
+							New User? Register here
+						</Button>
 					</Col>
 				</Row>
 			</div>
