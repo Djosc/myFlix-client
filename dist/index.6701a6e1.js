@@ -37528,7 +37528,7 @@ function RegistrationView(props) {
                                 /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.FloatingLabel, {
                                     className: "mx-4 my-4",
                                     controlId: "passwordInput",
-                                    label: "Password (must be 8 at least 8 characters)",
+                                    label: "Password (must be at least 8 characters)",
                                     __source: {
                                         fileName: "src/components/registration-view/registration-view.jsx",
                                         lineNumber: 37
