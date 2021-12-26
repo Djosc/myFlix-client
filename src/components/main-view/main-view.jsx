@@ -76,9 +76,9 @@ class MainView extends React.Component {
 		if (movies.length === 0) return <div className="main-view" />;
 
 		return (
-			<Row className="main-view justify-content-md-center pt-4">
+			<Row className="main-view justify-content-center mt-4 pt-2">
 				{selectedMovie ? (
-					<Col md={8}>
+					<Col lg={10} md={10} sm={12}>
 						<MovieView
 							movieData={selectedMovie}
 							onBackClick={(newSelectedMovie) => {

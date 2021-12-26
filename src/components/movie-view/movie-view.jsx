@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Row, Col, Button, Container, Stack } from 'react-bootstrap';
 
 class MovieView extends React.Component {
 	render() {
@@ -8,34 +9,42 @@ class MovieView extends React.Component {
 		if (movieData.length === 0) return <div>No movies to display.</div>;
 
 		return (
-			<div className="movie-view">
-				<div className="movie-poster">
-					<img
-						src={movieData.ImagePath}
-						crossOrigin="anonymous"
-						style={{ width: '100%' }}
-					/>
-				</div>
-				<div className="movie-title">
-					<span className="label">Title: </span>
-					<span className="value">{movieData.Title}</span>
-				</div>
-				<div className="movie-description">
-					<span className="label">Description: </span>
-					<span className="value">{movieData.Description}</span>
-				</div>
-				<div className="movie-director">
-					<span className="label">Director: </span>
-					<span className="value">{movieData.Director.Name}</span>
-				</div>
-				<button
-					onClick={() => {
-						onBackClick(null);
-					}}
-				>
-					Back
-				</button>
-			</div>
+			<Container className="movie-view">
+				<Row>
+					<Col>
+						<img
+							src={movieData.ImagePath}
+							crossOrigin="anonymous"
+							style={{ width: '100%' }}
+						/>
+					</Col>
+					<Col>
+						<Stack gap={4} className="row-xs-3" style={{ marginTop: '20%' }}>
+							<div className="movie-title">
+								<span className="label">Title: </span>
+								<span className="value">{movieData.Title}</span>
+							</div>
+							<div className="movie-description">
+								<span className="label">Description: </span>
+								<span className="value">{movieData.Description}</span>
+							</div>
+							<div className="movie-director">
+								<span className="label">Director: </span>
+								<span className="value">{movieData.Director.Name}</span>
+							</div>
+							<Button
+								className=""
+								variant="primary"
+								onClick={() => {
+									onBackClick(null);
+								}}
+							>
+								Back
+							</Button>
+						</Stack>
+					</Col>
+				</Row>
+			</Container>
 		);
 	}
 }

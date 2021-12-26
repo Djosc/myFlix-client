@@ -1,5 +1,6 @@
-.my-flix {
-  color: steelblue;
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Work+Sans:wght@300;400&display=swap");
+body {
+  font-family: "Work Sans", sans-serif;
 }
 
 
