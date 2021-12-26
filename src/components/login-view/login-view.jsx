@@ -25,7 +25,7 @@ export function LoginView(props) {
 						<Card>
 							<Card.Body className="text-center">
 								<Card.Title as="h2" className="text-center">
-									Login
+									Log in
 								</Card.Title>
 								<FloatingLabel
 									className="my-4 mx-4"
@@ -55,7 +55,7 @@ export function LoginView(props) {
 									/>
 								</FloatingLabel>
 								<Button size="lg" variant="primary" type="submit" onClick={handleSubmit}>
-									Submit
+									Log In
 								</Button>
 							</Card.Body>
 						</Card>
