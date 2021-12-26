@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
+import { Container, Form, Button, Row, Col, FloatingLabel, Card } from 'react-bootstrap';
 
 import './login-view.scss';
 
@@ -19,25 +18,51 @@ export function LoginView(props) {
 	};
 
 	return (
-		<div className="login-form">
-			<Form>
-				<Form.Group controlId="formUsername">
-					<Form.Label>Username:</Form.Label>
-					<Form.Control type="text" onChange={(e) => setUsername(e.target.value)} />
-				</Form.Group>
-
-				<Form.Group controlId="formPassword">
-					<Form.Label>Password:</Form.Label>
-					<Form.Control
-						type="password"
-						onChange={(e) => setPassword(e.target.value)}
-					></Form.Control>
-				</Form.Group>
-				<Button variant="primary" type="submit" onClick={handleSubmit}>
-					Submit
-				</Button>
-			</Form>
-		</div>
+		<Container>
+			<div className="login-form">
+				<Row className="justify-content-center" style={{ marginTop: '20%' }}>
+					<Col lg={6} md={8}>
+						<Card>
+							<Card.Body className="text-center">
+								<Card.Title as="h2" className="text-center">
+									Login
+								</Card.Title>
+								<FloatingLabel
+									className="my-4 mx-4"
+									controlId="floatingUsername"
+									label="Username"
+								>
+									<Form.Control
+										type="text"
+										value={username}
+										onChange={(e) => setUsername(e.target.value)}
+										required
+										placeholder="Username Example"
+									/>
+								</FloatingLabel>
+								<FloatingLabel
+									className="my-4 mx-4"
+									controlId="floatingPassword"
+									label="Password (must be at least 8 characters)"
+								>
+									<Form.Control
+										type="password"
+										value={password}
+										onChange={(e) => setPassword(e.target.value)}
+										required
+										minLength="8"
+										placeholder="Password Example"
+									/>
+								</FloatingLabel>
+								<Button size="lg" variant="primary" type="submit" onClick={handleSubmit}>
+									Submit
+								</Button>
+							</Card.Body>
+						</Card>
+					</Col>
+				</Row>
+			</div>
+		</Container>
 	);
 }
 

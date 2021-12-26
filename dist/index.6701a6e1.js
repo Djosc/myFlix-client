@@ -25982,97 +25982,124 @@ function LoginView(props) {
         Then call this.props.onLoggedIn(username)
     */ props.onLoggedIn(username);
     };
-    return(/*#__PURE__*/ _jsxRuntime.jsx("div", {
-        className: "login-form",
+    return(/*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Container, {
         __source: {
             fileName: "src/components/login-view/login-view.jsx",
             lineNumber: 21
         },
         __self: this,
-        children: /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Card, {
+        children: /*#__PURE__*/ _jsxRuntime.jsx("div", {
+            className: "login-form",
             __source: {
                 fileName: "src/components/login-view/login-view.jsx",
                 lineNumber: 22
             },
             __self: this,
-            children: /*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Card.Body, {
-                className: "text-center",
+            children: /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Row, {
+                className: "justify-content-center",
+                style: {
+                    marginTop: '20%'
+                },
                 __source: {
                     fileName: "src/components/login-view/login-view.jsx",
                     lineNumber: 23
                 },
                 __self: this,
-                children: [
-                    /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Card.Title, {
-                        as: "h2",
-                        className: "text-center",
+                children: /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Col, {
+                    lg: 6,
+                    md: 8,
+                    __source: {
+                        fileName: "src/components/login-view/login-view.jsx",
+                        lineNumber: 24
+                    },
+                    __self: this,
+                    children: /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Card, {
                         __source: {
                             fileName: "src/components/login-view/login-view.jsx",
-                            lineNumber: 24
+                            lineNumber: 25
                         },
                         __self: this,
-                        children: "Login"
-                    }),
-                    /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.FloatingLabel, {
-                        className: "my-4 mx-5",
-                        controlId: "floatingUsername",
-                        label: "Username",
-                        __source: {
-                            fileName: "src/components/login-view/login-view.jsx",
-                            lineNumber: 27
-                        },
-                        __self: this,
-                        children: /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Form.Control, {
-                            type: "text",
-                            value: username,
-                            onChange: (e)=>setUsername(e.target.value)
-                            ,
-                            required: true,
-                            placeholder: "Username Example",
+                        children: /*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Card.Body, {
+                            className: "text-center",
                             __source: {
                                 fileName: "src/components/login-view/login-view.jsx",
-                                lineNumber: 32
+                                lineNumber: 26
                             },
-                            __self: this
+                            __self: this,
+                            children: [
+                                /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Card.Title, {
+                                    as: "h2",
+                                    className: "text-center",
+                                    __source: {
+                                        fileName: "src/components/login-view/login-view.jsx",
+                                        lineNumber: 27
+                                    },
+                                    __self: this,
+                                    children: "Login"
+                                }),
+                                /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.FloatingLabel, {
+                                    className: "my-4 mx-4",
+                                    controlId: "floatingUsername",
+                                    label: "Username",
+                                    __source: {
+                                        fileName: "src/components/login-view/login-view.jsx",
+                                        lineNumber: 30
+                                    },
+                                    __self: this,
+                                    children: /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Form.Control, {
+                                        type: "text",
+                                        value: username,
+                                        onChange: (e)=>setUsername(e.target.value)
+                                        ,
+                                        required: true,
+                                        placeholder: "Username Example",
+                                        __source: {
+                                            fileName: "src/components/login-view/login-view.jsx",
+                                            lineNumber: 35
+                                        },
+                                        __self: this
+                                    })
+                                }),
+                                /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.FloatingLabel, {
+                                    className: "my-4 mx-4",
+                                    controlId: "floatingPassword",
+                                    label: "Password (must be at least 8 characters)",
+                                    __source: {
+                                        fileName: "src/components/login-view/login-view.jsx",
+                                        lineNumber: 43
+                                    },
+                                    __self: this,
+                                    children: /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Form.Control, {
+                                        type: "password",
+                                        value: password,
+                                        onChange: (e)=>setPassword(e.target.value)
+                                        ,
+                                        required: true,
+                                        minLength: "8",
+                                        placeholder: "Password Example",
+                                        __source: {
+                                            fileName: "src/components/login-view/login-view.jsx",
+                                            lineNumber: 48
+                                        },
+                                        __self: this
+                                    })
+                                }),
+                                /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Button, {
+                                    size: "lg",
+                                    variant: "primary",
+                                    type: "submit",
+                                    onClick: handleSubmit,
+                                    __source: {
+                                        fileName: "src/components/login-view/login-view.jsx",
+                                        lineNumber: 57
+                                    },
+                                    __self: this,
+                                    children: "Submit"
+                                })
+                            ]
                         })
-                    }),
-                    /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.FloatingLabel, {
-                        className: "my-4 mx-5",
-                        controlId: "floatingPassword",
-                        label: "Password (must be at least 8 characters in length)",
-                        __source: {
-                            fileName: "src/components/login-view/login-view.jsx",
-                            lineNumber: 40
-                        },
-                        __self: this,
-                        children: /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Form.Control, {
-                            type: "password",
-                            value: password,
-                            onChange: (e)=>setPassword(e.target.value)
-                            ,
-                            required: true,
-                            minLength: "8",
-                            placeholder: "Password Example",
-                            __source: {
-                                fileName: "src/components/login-view/login-view.jsx",
-                                lineNumber: 45
-                            },
-                            __self: this
-                        })
-                    }),
-                    /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Button, {
-                        size: "lg",
-                        variant: "primary",
-                        type: "submit",
-                        onClick: handleSubmit,
-                        __source: {
-                            fileName: "src/components/login-view/login-view.jsx",
-                            lineNumber: 54
-                        },
-                        __self: this,
-                        children: "Submit"
                     })
-                ]
+                })
             })
         })
     }));
