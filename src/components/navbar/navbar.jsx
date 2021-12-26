@@ -8,19 +8,19 @@ export default class NavBar extends React.Component {
 		return (
 			<Navbar bg="primary" expand="lg" variant="dark" sticky="top">
 				<Container>
-					<Navbar.Brand href="">MyFlix</Navbar.Brand>
+					<Navbar.Brand href="" style={{ fontSize: '2.5rem' }}>
+						MyFlix
+					</Navbar.Brand>
 					<Navbar.Toggle aria-controls="basic-navbar-nav" />
-					<Navbar.Collapse id="basic-navbar-nav">
+					<Navbar.Collapse id="basic-navbar-nav" style={{ fontSize: '1.2rem' }}>
 						<Nav className="me-auto">
-							<Nav.Link href="#home">Home</Nav.Link>
-							<Nav.Link href="#link">Link</Nav.Link>
-							<NavDropdown title="Dropdown" id="basic-nav-dropdown">
-								<NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-								<NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-								<NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-								<NavDropdown.Divider />
-								<NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
-							</NavDropdown>
+							<Nav.Link href="">Movies</Nav.Link>
+							<Nav.Link href="">Profile</Nav.Link>
+						</Nav>
+						<Nav>
+							<Nav.Link href="" className="justify-content-right">
+								Log Out
+							</Nav.Link>
 						</Nav>
 					</Navbar.Collapse>
 				</Container>

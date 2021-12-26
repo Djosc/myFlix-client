@@ -22998,7 +22998,7 @@ class MainView extends _reactDefault.default.Component {
             __self: this
         }));
         return(/*#__PURE__*/ _jsxRuntime.jsx(_rowDefault.default, {
-            className: "main-view justify-content-md-center",
+            className: "main-view justify-content-md-center pt-4",
             __source: {
                 fileName: "src/components/main-view/main-view.jsx",
                 lineNumber: 79
@@ -26130,7 +26130,7 @@ $RefreshReg$(_c, "LoginView");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-runtime":"8xIwr","react":"6TuXu","@parcel/transformer-js/src/esmodule-helpers.js":"eBqip","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"jVIvJ","prop-types":"1tgq3","./login-view.scss":"lS4BK","react-bootstrap":"h2YVd"}],"lS4BK":[function() {},{}],"h2YVd":[function(require,module,exports) {
+},{"react/jsx-runtime":"8xIwr","react":"6TuXu","@parcel/transformer-js/src/esmodule-helpers.js":"eBqip","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"jVIvJ","prop-types":"1tgq3","react-bootstrap":"h2YVd","./login-view.scss":"lS4BK"}],"h2YVd":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "Accordion", ()=>_accordionDefault.default
@@ -37438,7 +37438,7 @@ Tooltip.defaultProps = defaultProps;
 Tooltip.displayName = 'Tooltip';
 exports.default = Tooltip;
 
-},{"classnames":"bOXOh","react":"6TuXu","./ThemeProvider":"eeqfi","./helpers":"S1Bw1","react/jsx-runtime":"8xIwr","@parcel/transformer-js/src/esmodule-helpers.js":"eBqip"}],"aP2YV":[function(require,module,exports) {
+},{"classnames":"bOXOh","react":"6TuXu","./ThemeProvider":"eeqfi","./helpers":"S1Bw1","react/jsx-runtime":"8xIwr","@parcel/transformer-js/src/esmodule-helpers.js":"eBqip"}],"lS4BK":[function() {},{}],"aP2YV":[function(require,module,exports) {
 var $parcel$ReactRefreshHelpers$8dd4 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
@@ -37687,6 +37687,9 @@ class NavBar extends _reactDefault.default.Component {
                 children: [
                     /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Navbar.Brand, {
                         href: "",
+                        style: {
+                            fontSize: '2.5rem'
+                        },
                         __source: {
                             fileName: "src/components/navbar/navbar.jsx",
                             lineNumber: 11
@@ -37698,99 +37701,67 @@ class NavBar extends _reactDefault.default.Component {
                         "aria-controls": "basic-navbar-nav",
                         __source: {
                             fileName: "src/components/navbar/navbar.jsx",
-                            lineNumber: 12
+                            lineNumber: 14
                         },
                         __self: this
                     }),
-                    /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Navbar.Collapse, {
+                    /*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Navbar.Collapse, {
                         id: "basic-navbar-nav",
+                        style: {
+                            fontSize: '1.2rem'
+                        },
                         __source: {
                             fileName: "src/components/navbar/navbar.jsx",
-                            lineNumber: 13
+                            lineNumber: 15
                         },
                         __self: this,
-                        children: /*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Nav, {
-                            className: "me-auto",
-                            __source: {
-                                fileName: "src/components/navbar/navbar.jsx",
-                                lineNumber: 14
-                            },
-                            __self: this,
-                            children: [
-                                /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Nav.Link, {
-                                    href: "#home",
+                        children: [
+                            /*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Nav, {
+                                className: "me-auto",
+                                __source: {
+                                    fileName: "src/components/navbar/navbar.jsx",
+                                    lineNumber: 16
+                                },
+                                __self: this,
+                                children: [
+                                    /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Nav.Link, {
+                                        href: "",
+                                        __source: {
+                                            fileName: "src/components/navbar/navbar.jsx",
+                                            lineNumber: 17
+                                        },
+                                        __self: this,
+                                        children: "Movies"
+                                    }),
+                                    /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Nav.Link, {
+                                        href: "",
+                                        __source: {
+                                            fileName: "src/components/navbar/navbar.jsx",
+                                            lineNumber: 18
+                                        },
+                                        __self: this,
+                                        children: "Profile"
+                                    })
+                                ]
+                            }),
+                            /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Nav, {
+                                __source: {
+                                    fileName: "src/components/navbar/navbar.jsx",
+                                    lineNumber: 20
+                                },
+                                __self: this,
+                                children: /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Nav.Link, {
+                                    href: "",
+                                    className: "justify-content-right",
                                     __source: {
                                         fileName: "src/components/navbar/navbar.jsx",
-                                        lineNumber: 15
+                                        lineNumber: 21
                                     },
                                     __self: this,
-                                    children: "Home"
-                                }),
-                                /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Nav.Link, {
-                                    href: "#link",
-                                    __source: {
-                                        fileName: "src/components/navbar/navbar.jsx",
-                                        lineNumber: 16
-                                    },
-                                    __self: this,
-                                    children: "Link"
-                                }),
-                                /*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.NavDropdown, {
-                                    title: "Dropdown",
-                                    id: "basic-nav-dropdown",
-                                    __source: {
-                                        fileName: "src/components/navbar/navbar.jsx",
-                                        lineNumber: 17
-                                    },
-                                    __self: this,
-                                    children: [
-                                        /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.NavDropdown.Item, {
-                                            href: "#action/3.1",
-                                            __source: {
-                                                fileName: "src/components/navbar/navbar.jsx",
-                                                lineNumber: 18
-                                            },
-                                            __self: this,
-                                            children: "Action"
-                                        }),
-                                        /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.NavDropdown.Item, {
-                                            href: "#action/3.2",
-                                            __source: {
-                                                fileName: "src/components/navbar/navbar.jsx",
-                                                lineNumber: 19
-                                            },
-                                            __self: this,
-                                            children: "Another action"
-                                        }),
-                                        /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.NavDropdown.Item, {
-                                            href: "#action/3.3",
-                                            __source: {
-                                                fileName: "src/components/navbar/navbar.jsx",
-                                                lineNumber: 20
-                                            },
-                                            __self: this,
-                                            children: "Something"
-                                        }),
-                                        /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.NavDropdown.Divider, {
-                                            __source: {
-                                                fileName: "src/components/navbar/navbar.jsx",
-                                                lineNumber: 21
-                                            },
-                                            __self: this
-                                        }),
-                                        /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.NavDropdown.Item, {
-                                            href: "#action/3.4",
-                                            __source: {
-                                                fileName: "src/components/navbar/navbar.jsx",
-                                                lineNumber: 22
-                                            },
-                                            __self: this,
-                                            children: "Separated link"
-                                        })
-                                    ]
+                                    children: "Log Out"
                                 })
-                            ]
-                        })
+                            })
+                        ]
                     })
                 ]
             })

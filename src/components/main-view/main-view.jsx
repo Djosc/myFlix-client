@@ -76,7 +76,7 @@ class MainView extends React.Component {
 		if (movies.length === 0) return <div className="main-view" />;
 
 		return (
-			<Row className="main-view justify-content-md-center">
+			<Row className="main-view justify-content-md-center pt-4">
 				{selectedMovie ? (
 					<Col md={8}>
 						<MovieView
