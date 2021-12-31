@@ -1,12 +1,13 @@
 import React from 'react';
 import axios from 'axios';
 
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+
 import { LoginView } from '../login-view/login-view';
 import { RegistrationView } from '../registration-view/registration-view';
 import MovieCard from '../movie-card/movie-card';
 import MovieView from '../movie-view/movie-view';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import { Button, Row, Col } from 'react-bootstrap';
 
 class MainView extends React.Component {
 	constructor() {
@@ -16,22 +17,42 @@ class MainView extends React.Component {
 			movies: [],
 			selectedMovie: null,
 			user: null,
-			registered: false,
+			registered: true,
 			existingUser: false,
 		};
 	}
 
 	componentDidMount() {
+		let accessToken = localStorage.getItem('token');
+		if (accessToken !== null) {
+			this.setState({
+				user: localStorage.getItem('user'),
+			});
+			this.getMovies(accessToken);
+		}
+	}
+
+	getMovies(token) {
 		axios
-			.get('https://david-caldwell-myflix.herokuapp.com/movies')
-			.then((res) => {
+			.get('https://david-caldwell-myflix.herokuapp.com/movies', {
+				headers: { Authorization: `Bearer ${token}` },
+			})
+			.then((response) => {
 				this.setState({
-					movies: res.data,
+					movies: response.data,
 				});
 			})
 			.catch((error) => {
 				console.log(error);
 			});
+	}
+
+	onLoggedOut() {
+		localStorage.removeItem('token');
+		localStorage.removeItem('user');
+		this.setState({
+			user: null,
+		});
 	}
 
 	/**
@@ -48,10 +69,15 @@ class MainView extends React.Component {
 	 * When a user successfully logs in,
 	 * this function updates the `user` property in state to that *particular user*
 	 */
-	onLoggedIn(user) {
+	onLoggedIn(authData) {
+		console.log(authData);
 		this.setState({
-			user,
+			user: authData.user.Username,
 		});
+
+		localStorage.setItem('token', authData.token);
+		localStorage.setItem('user', authData.user.Username);
+		this.getMovies(authData.token);
 	}
 
 	onRegister(registered) {
@@ -81,30 +107,60 @@ class MainView extends React.Component {
 		if (movies.length === 0) return <div className="main-view" />;
 
 		return (
-			<Row className="main-view justify-content-center mt-4 pt-2">
-				{selectedMovie ? (
-					<Col lg={10} md={10} sm={12}>
-						<MovieView
-							movieData={selectedMovie}
-							onBackClick={(newSelectedMovie) => {
-								this.setSelectedMovie(newSelectedMovie);
+			<Router>
+				<Row className="main-view justify-content-center mt-4 pt-2">
+					<Button
+						variant="primary"
+						onClick={() => {
+							this.onLoggedOut();
+						}}
+					>
+						Logout
+					</Button>
+					<Switch>
+						<Route
+							path="/"
+							render={() => {
+								return movies.map((m) => (
+									<Col lg={3} md={4} sm={6} key={m._id}>
+										<MovieCard movieData={m} />
+									</Col>
+								));
 							}}
 						/>
-					</Col>
-				) : (
-					movies.map((movie) => (
-						<Col lg={3} md={6}>
-							<MovieCard
-								key={movie._id}
-								movieData={movie}
-								onMovieClick={(movie) => {
-									this.setSelectedMovie(movie);
-								}}
-							/>
-						</Col>
-					))
-				)}
-			</Row>
+						<Route
+							exact
+							path="/movies/:movieId"
+							render={({ match, history }) => {
+								return (
+									<Col lg={10} md={10} sm={12}>
+										<MovieView
+											movieData={movies.find((m) => m._id === match.params.movieId)}
+											onBackClick={() => history.goBack()}
+										/>
+									</Col>
+								);
+							}}
+						/>
+						{/* <Route
+							path="/movies/:movieId"
+							element={({ match, history }) => {
+								return (
+									<Col lg={10} md={10} sm={12}>
+										<MovieView
+											movieData={movies.find((m) => m._id === match.params.movieId)}
+											onBackClick={() => history.goBack()}
+										/>
+									</Col>
+								);
+							}}
+						/> */}
+						{/* <Route exact path="/genres/:name" element={} />
+						<Route exact path="/directors/:name" element={} />
+						<Route exact path="" element={} /> */}
+					</Switch>
+				</Row>
+			</Router>
 		);
 	}
 }
