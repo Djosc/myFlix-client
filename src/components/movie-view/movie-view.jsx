@@ -19,8 +19,8 @@ class MovieView extends React.Component {
 							style={{ width: '100%' }}
 						/>
 					</Col>
-					<Col>
-						<Stack gap={4} className="row-xs-3 text-center" style={{ marginTop: '20%' }}>
+					<Col className="text-center">
+						<Stack gap={4} className="row-xs-3" style={{ marginTop: '20%' }}>
 							<div className="movie-title">
 								<h2>{movieData.Title}</h2>
 							</div>
@@ -39,16 +39,17 @@ class MovieView extends React.Component {
 							<div className="movie-description">
 								<span className="value">{movieData.Description}</span>
 							</div>
-							<Button
-								className=""
-								variant="primary"
-								onClick={() => {
-									this.props.onBackClick();
-								}}
-							>
-								Back
-							</Button>
 						</Stack>
+						<Button
+							className="mt-4"
+							variant="primary"
+							size="lg"
+							onClick={() => {
+								onBackClick();
+							}}
+						>
+							Back
+						</Button>
 					</Col>
 				</Row>
 			</Container>

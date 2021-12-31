@@ -11,6 +11,7 @@ import DirectorView from '../director-view/director-view';
 import MovieCard from '../movie-card/movie-card';
 import MovieView from '../movie-view/movie-view';
 import { Button, Row, Col } from 'react-bootstrap';
+import GenreView from '../genre-view/genre-view';
 
 class MainView extends React.Component {
 	constructor() {
@@ -163,8 +164,22 @@ class MainView extends React.Component {
 								);
 							}}
 						/>
-						{/* <Route exact path="/genres/:name" render={<GenreView />} />
-						<Route exact path="" render={<ProfileView />} /> */}
+						<Route
+							exact
+							path="/genres/:name"
+							render={({ match, history }) => {
+								if (movies.length === 0) return <div className="main-view"></div>;
+								return (
+									<Col lg={10} md={10} sm={12}>
+										<GenreView
+											genre={movies.find((m) => m.Genre.Name === match.params.name).Genre}
+											onBackClick={() => history.goBack()}
+										/>
+									</Col>
+								);
+							}}
+						/>
+						{/* <Route exact path="" render={<ProfileView />} />  */}
 					</Switch>
 				</Row>
 			</Router>
