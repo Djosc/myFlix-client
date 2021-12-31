@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 import { Container, Form, Button, Row, Col, FloatingLabel, Card } from 'react-bootstrap';
 
 import './login-view.scss';
@@ -14,7 +15,19 @@ export function LoginView(props) {
 		/* Send a request to the server for authentication
         Then call this.props.onLoggedIn(username)
     */
-		props.onLoggedIn(username);
+		axios
+			.post('https://david-caldwell-myflix.herokuapp.com/login', {
+				Username: username,
+				Password: password,
+			})
+			.then((response) => {
+				const data = response.data;
+				props.onLoggedIn(data);
+			})
+			.catch((e) => {
+				console.log('no such user');
+			});
+		// props.onLoggedIn(username);
 	};
 
 	const handleNewUser = (e) => {

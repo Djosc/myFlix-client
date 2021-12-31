@@ -5,6 +5,9 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import { LoginView } from '../login-view/login-view';
 import { RegistrationView } from '../registration-view/registration-view';
+import DirectorView from '../director-view/director-view';
+// import { GenreView } from '../genre-view/genre-view';
+// import { ProfileView } from '../profile-view/profile-view';
 import MovieCard from '../movie-card/movie-card';
 import MovieView from '../movie-view/movie-view';
 import { Button, Row, Col } from 'react-bootstrap';
@@ -119,6 +122,7 @@ class MainView extends React.Component {
 					</Button>
 					<Switch>
 						<Route
+							exact
 							path="/"
 							render={() => {
 								return movies.map((m) => (
@@ -142,22 +146,25 @@ class MainView extends React.Component {
 								);
 							}}
 						/>
-						{/* <Route
-							path="/movies/:movieId"
-							element={({ match, history }) => {
+						<Route
+							exact
+							path="/directors/:name"
+							render={({ match, history }) => {
+								if (movies.length === 0) return <div className="main-view" />;
 								return (
 									<Col lg={10} md={10} sm={12}>
-										<MovieView
-											movieData={movies.find((m) => m._id === match.params.movieId)}
+										<DirectorView
+											director={
+												movies.find((m) => m.Director.Name === match.params.name).Director
+											}
 											onBackClick={() => history.goBack()}
 										/>
 									</Col>
 								);
 							}}
-						/> */}
-						{/* <Route exact path="/genres/:name" element={} />
-						<Route exact path="/directors/:name" element={} />
-						<Route exact path="" element={} /> */}
+						/>
+						{/* <Route exact path="/genres/:name" render={<GenreView />} />
+						<Route exact path="" render={<ProfileView />} /> */}
 					</Switch>
 				</Row>
 			</Router>

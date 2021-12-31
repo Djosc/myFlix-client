@@ -26,3 +26,4 @@ const container = document.getElementsByClassName('app-container')[0];
 
 //Tells React to render the app in the root DOM element
 ReactDom.render(React.createElement(MyFlixApplication), container);
+// ReactDom.render(<MyFlixApplication />, container);

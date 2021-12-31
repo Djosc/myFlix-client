@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Row, Col, Button, Container, Stack } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 class MovieView extends React.Component {
 	render() {
@@ -19,24 +20,30 @@ class MovieView extends React.Component {
 						/>
 					</Col>
 					<Col>
-						<Stack gap={4} className="row-xs-3" style={{ marginTop: '20%' }}>
+						<Stack gap={4} className="row-xs-3 text-center" style={{ marginTop: '20%' }}>
 							<div className="movie-title">
-								<span className="label">Title: </span>
-								<span className="value">{movieData.Title}</span>
-							</div>
-							<div className="movie-description">
-								<span className="label">Description: </span>
-								<span className="value">{movieData.Description}</span>
+								<h2>{movieData.Title}</h2>
 							</div>
 							<div className="movie-director">
-								<span className="label">Director: </span>
-								<span className="value">{movieData.Director.Name}</span>
+								<span className="label">Directed by:</span>
+								<Link to={`/directors/${movieData.Director.Name}`}>
+									<Button variant="link">{movieData.Director.Name}</Button>
+								</Link>
+							</div>
+							<div className="movie-genre">
+								<span className="label">Genre:</span>
+								<Link to={`/genres/${movieData.Genre.Name}`}>
+									<Button variant="link">{movieData.Genre.Name}</Button>
+								</Link>
+							</div>
+							<div className="movie-description">
+								<span className="value">{movieData.Description}</span>
 							</div>
 							<Button
 								className=""
 								variant="primary"
 								onClick={() => {
-									onBackClick(null);
+									this.props.onBackClick();
 								}}
 							>
 								Back
