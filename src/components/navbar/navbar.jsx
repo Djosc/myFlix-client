@@ -35,7 +35,6 @@ export default function NavBar({ user }) {
 					<Nav className="me-auto">
 						{isAuth() && <Nav.Link href="/">Movies</Nav.Link>}
 						{isAuth() && <Nav.Link href={`/users/${user}`}>{user}</Nav.Link>}
-						{/* {isAuth() && <Nav.Link href="#">Profile</Nav.Link>} */}
 					</Nav>
 					<Nav className="justify-content-right">
 						{!isAuth() && <Nav.Link href="/register">Sign Up</Nav.Link>}
