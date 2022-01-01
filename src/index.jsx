@@ -6,14 +6,14 @@ import NavBar from './components/navbar/navbar';
 
 // Import statement to indicate that you need to bundle `./index.scss`
 import './index.scss';
+import { Navbar } from 'react-bootstrap';
 
 // Main component
 class MyFlixApplication extends React.Component {
 	render() {
 		return (
 			<>
-				<NavBar />
-				<Container>
+				<Container fluid="true">
 					<MainView />
 				</Container>
 			</>

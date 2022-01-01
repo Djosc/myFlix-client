@@ -10,7 +10,8 @@ import DirectorView from '../director-view/director-view';
 // import { ProfileView } from '../profile-view/profile-view';
 import MovieCard from '../movie-card/movie-card';
 import MovieView from '../movie-view/movie-view';
-import { Button, Row, Col } from 'react-bootstrap';
+import NavBar from '../navbar/navbar';
+import { Button, Row, Col, Navbar, Container } from 'react-bootstrap';
 import GenreView from '../genre-view/genre-view';
 
 class MainView extends React.Component {
@@ -93,44 +94,51 @@ class MainView extends React.Component {
 	render() {
 		const { movies, selectedMovie, registered, user } = this.state;
 
-		if (!registered) {
-			return (
-				<RegistrationView onRegister={(registered) => this.onRegister(registered)} />
-			);
-		}
+		// if (!registered) {
+		// 	return (
+		// 		<RegistrationView onRegister={(registered) => this.onRegister(registered)} />
+		// 	);
+		// }
 
-		if (!user) {
-			return (
-				<LoginView
-					onLoggedIn={(user) => this.onLoggedIn(user)}
-					onRegister={(registered) => this.onRegister(registered)}
-				/>
-			);
-		}
-
-		if (movies.length === 0) return <div className="main-view" />;
+		// if (!user) {
+		// 	return (
+		// 		<LoginView
+		// 			onLoggedIn={(user) => this.onLoggedIn(user)}
+		// 			onRegister={(registered) => this.onRegister(registered)}
+		// 		/>
+		// 	);
+		// }
+		// if (movies.length === 0) return <div className="main-view" />;
 
 		return (
 			<Router>
-				<Row className="main-view justify-content-center mt-4 pt-2">
-					<Button
-						variant="primary"
-						onClick={() => {
-							this.onLoggedOut();
-						}}
-					>
-						Logout
-					</Button>
-					<Switch>
+				<NavBar user={user} />
+				<Container className="main-view ">
+					<Row className="main-view justify-content-center mt-4 pt-2">
 						<Route
 							exact
 							path="/"
 							render={() => {
+								if (!user) {
+									return <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />;
+								}
+								if (movies.length === 0) return <div className="main-view" />;
 								return movies.map((m) => (
 									<Col lg={3} md={4} sm={6} key={m._id}>
 										<MovieCard movieData={m} />
 									</Col>
 								));
+							}}
+						/>
+						<Route
+							exact
+							path="/register"
+							render={() => {
+								return (
+									<RegistrationView
+										onRegister={(registered) => this.onRegister(registered)}
+									/>
+								);
 							}}
 						/>
 						<Route
@@ -179,9 +187,12 @@ class MainView extends React.Component {
 								);
 							}}
 						/>
+						{/* <Route exact path="/users/:user" render={({match}) => {
+
+						}} */}
 						{/* <Route exact path="" render={<ProfileView />} />  */}
-					</Switch>
-				</Row>
+					</Row>
+				</Container>
 			</Router>
 		);
 	}

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { Container, Form, Button, Row, Col, FloatingLabel, Card } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 export function RegistrationView(props) {
 	const [username, setUsername] = useState('');
@@ -12,11 +13,6 @@ export function RegistrationView(props) {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		props.onRegister(true);
-	};
-
-	const handleNewUser = (e) => {
-		e.preventDefault();
-		props.onRegister(false);
 	};
 
 	return (
@@ -79,9 +75,11 @@ export function RegistrationView(props) {
 							</Button>
 						</Card.Body>
 					</Card>
-					<Button variant="link" className="pt-3" onClick={handleSubmit}>
-						Existing User? Login here
-					</Button>
+					<Link to={'/'}>
+						<Button variant="link" className="pt-3">
+							Existing User? Login here
+						</Button>
+					</Link>
 				</Col>
 			</Row>
 		</Container>

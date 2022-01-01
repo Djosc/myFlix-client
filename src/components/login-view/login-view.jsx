@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import { Container, Form, Button, Row, Col, FloatingLabel, Card } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 import './login-view.scss';
 
@@ -27,12 +28,6 @@ export function LoginView(props) {
 			.catch((e) => {
 				console.log('no such user');
 			});
-		// props.onLoggedIn(username);
-	};
-
-	const handleNewUser = (e) => {
-		e.preventDefault();
-		props.onRegister(false);
 	};
 
 	return (
@@ -77,9 +72,11 @@ export function LoginView(props) {
 								</Button>
 							</Card.Body>
 						</Card>
-						<Button variant="link" className="pt-3" onClick={handleNewUser}>
-							New User? Register here
-						</Button>
+						<Link to={'/register'}>
+							<Button variant="link" className="pt-3">
+								New User? Register here
+							</Button>
+						</Link>
 					</Col>
 				</Row>
 			</div>
