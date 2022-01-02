@@ -10,13 +10,14 @@ import {
 	FloatingLabel,
 	Form,
 } from 'react-bootstrap';
+import { useState } from 'react'
 
 import UserInfo from './user-info';
 // import UserUpdateForm from './user-update-form';
 
 class ProfileView extends React.Component {
-	constructor() {
-		super();
+	constructor(props) {
+		super(props);
 		this.state = {
 			Username: null,
 			Password: null,
@@ -25,6 +26,8 @@ class ProfileView extends React.Component {
 			FavoriteMovies: [],
 		};
 	}
+
+	const [error, setError] = useState('')
 
 	componentDidMount() {
 		const authToken = localStorage.getItem('token');
@@ -44,8 +47,9 @@ class ProfileView extends React.Component {
 					Email: response.data.Email,
 					Birthday: response.data.Birthday,
 					FavoriteMovies: response.data.FavoriteMovies,
-				}).catch((err) => console.log(err));
-			});
+				});
+			})
+			.catch((err) => console.log(err));
 	}
 
 	updateUser = (e) => {
@@ -79,6 +83,24 @@ class ProfileView extends React.Component {
 			.catch((err) => console.log(err));
 	};
 
+	deleteUser = (e) => {
+		e.preventDefault();
+		const username = localStorage.getItem('user');
+		const authToken = localStorage.getItem('token');
+
+		axios
+			.delete(`https://david-caldwell-myflix.herokuapp.com/users/${username}`, {
+				headers: { Authorization: `Bearer ${authToken}` },
+			})
+			.then((response) => {
+				console.log(response.data);
+				alert('Account has been deleted');
+				localStorage.removeItem('token');
+				localStorage.removeItem('user');
+				window.open('/', '_self');
+			});
+	};
+
 	setUsername(value) {
 		this.state.Username = value;
 	}
@@ -95,8 +117,12 @@ class ProfileView extends React.Component {
 		this.state.Birthday = value;
 	}
 
+	validate = () => {
+
+	}
+
 	render() {
-		const { onBackClick } = this.props;
+		const { onBackClick, movies, onLoggedOut } = this.props;
 		return (
 			<Row>
 				<Col>
@@ -106,6 +132,7 @@ class ProfileView extends React.Component {
 						email={this.state.Email}
 						birthday={this.state.Birthday}
 						favoriteMovies={this.state.FavoriteMovies}
+						movies={movies}
 					/>
 				</Col>
 				<Col>
@@ -152,13 +179,30 @@ class ProfileView extends React.Component {
 									placeholder="Birthday Example"
 								/>
 							</FloatingLabel>
-							<Button size="lg" variant="primary" type="submit" onClick={this.updateUser}>
+							<Button
+								className="mx-4"
+								size="lg"
+								variant="primary"
+								type="submit"
+								onClick={this.updateUser}
+							>
 								Update
+							</Button>
+							<Button
+								className="mx-4"
+								size="lg"
+								variant="danger"
+								type="submit"
+								onClick={this.deleteUser}
+							>
+								Delete Account
 							</Button>
 						</Card.Body>
 					</Card>
 				</Col>
-				<Button variant="primary" size="lg" onClick={onBackClick}></Button>
+				<Button className="" variant="primary" size="lg" onClick={onBackClick}>
+					Back
+				</Button>
 			</Row>
 		);
 	}

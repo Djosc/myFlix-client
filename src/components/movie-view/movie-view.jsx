@@ -1,11 +1,78 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 import { Row, Col, Button, Container, Stack } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 class MovieView extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			FavoriteMovies: [],
+		};
+	}
+
+	componentDidMount() {
+		const authToken = localStorage.getItem('token');
+		this.getUser(authToken);
+	}
+
+	getUser(token) {
+		const username = localStorage.getItem('user');
+		axios
+			.get(`https://david-caldwell-myflix.herokuapp.com/users/${username}`, {
+				headers: { Authorization: `Bearer ${token}` },
+			})
+			.then((response) => {
+				this.setState({
+					FavoriteMovies: response.data.FavoriteMovies,
+				});
+			})
+			.catch((err) => console.log(err));
+	}
+
+	addMovieToFavorites(props) {
+		const username = localStorage.getItem('user');
+		const authToken = localStorage.getItem('token');
+
+		axios
+			.post(
+				`https://david-caldwell-myflix.herokuapp.com/users/${username}/movies/${this.props.movieData._id}`,
+				{},
+				{
+					headers: { Authorization: `Bearer ${authToken}` },
+					method: 'POST',
+				}
+			)
+			.then((response) => {
+				alert('Movie Added to Favorites');
+			})
+			.catch((err) => console.log(err));
+	}
+
+	removeMovieFromFavorites(props) {
+		const username = localStorage.getItem('user');
+		const authToken = localStorage.getItem('token');
+
+		axios
+			.delete(
+				`https://david-caldwell-myflix.herokuapp.com/users/${username}/movies/${this.props.movieData._id}`,
+				{
+					headers: { Authorization: `Bearer ${authToken}` },
+					method: 'DELETE',
+				}
+			)
+			.then((response) => {
+				alert('Movie Removed from Favorites');
+			})
+			.catch((err) => {
+				console.error(err);
+			});
+	}
+
 	render() {
 		const { movieData, user, onBackClick } = this.props;
+		console.log(this.state.FavoriteMovies);
 
 		if (movieData.length === 0) return <div>No movies to display.</div>;
 
@@ -39,20 +106,44 @@ class MovieView extends React.Component {
 							<div className="movie-description">
 								<span className="value">{movieData.Description}</span>
 							</div>
-							<Button variant="warning" size="lg">
+							{this.state.FavoriteMovies.includes(movieData._id) ? (
+								<Button
+									className="mt-4"
+									variant="danger"
+									size="lg"
+									onClick={() => this.removeMovieFromFavorites(movieData)}
+								>
+									Remove from Favorites
+								</Button>
+							) : (
+								<Button
+									className="mt-4"
+									variant="warning"
+									size="lg"
+									onClick={() => this.addMovieToFavorites(movieData)}
+								>
+									Add to Favorites
+								</Button>
+							)}
+							{/* <Button
+								className="mt-4"
+								variant="warning"
+								size="lg"
+								onClick={() => this.addMovieToFavorites(movieData)}
+							>
 								Add to Favorites
+							</Button> */}
+							<Button
+								className="mt-4"
+								variant="primary"
+								size="lg"
+								onClick={() => {
+									onBackClick();
+								}}
+							>
+								Back
 							</Button>
 						</Stack>
-						<Button
-							className="mt-4"
-							variant="primary"
-							size="lg"
-							onClick={() => {
-								onBackClick();
-							}}
-						>
-							Back
-						</Button>
 					</Col>
 				</Row>
 			</Container>
@@ -77,7 +168,7 @@ MovieView.propTypes = {
 		ImagePath: PropTypes.string, //Maybe need to make this required
 		Featured: PropTypes.bool.isRequired,
 	}).isRequired,
-	user: PropTypes.bool.isRequired,
+	// user: PropTypes.bool.isRequired,
 	onBackClick: PropTypes.func.isRequired,
 };
 
