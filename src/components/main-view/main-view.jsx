@@ -82,6 +82,7 @@ class MainView extends React.Component {
 		localStorage.setItem('token', authData.token);
 		localStorage.setItem('user', authData.user.Username);
 		this.getMovies(authData.token);
+		// this.getUser(authData.token);
 	}
 
 	onRegister(registered) {
@@ -190,15 +191,14 @@ class MainView extends React.Component {
 								}
 								if (movies.length === 0) return <div className="main-view"></div>;
 								return (
-									<Col lg={10} md={10} sm={12}>
-										<ProfileView
-											history={history}
-											movies={movies}
-											user={user === match.params.userame}
-											onBackClick={() => history.goBack()}
-										/>
-										;
-									</Col>
+									// <Col lg={10} md={10} sm={12}>
+									<ProfileView
+										history={history}
+										movies={movies}
+										user={user === match.params.userame}
+										onBackClick={() => history.goBack()}
+									/>
+									// </Col>
 								);
 							}}
 						/>
