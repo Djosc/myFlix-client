@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 import { useState } from 'react';
 import { Container, Form, Button, Row, Col, FloatingLabel, Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
@@ -13,6 +14,23 @@ export function RegistrationView(props) {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		props.onRegister(true);
+
+		axios
+			.post('https://david-caldwell-myflix.herokuapp.com/users', {
+				Username: username,
+				Password: password,
+				Email: email,
+				Birthday: birthday,
+			})
+			.then((response) => {
+				const data = response.data;
+				console.log(data);
+				alert('Succesfully Registered');
+				window.open('/', '_self');
+			})
+			.catch((e) => {
+				console.log('error registering the user');
+			});
 	};
 
 	return (
@@ -60,7 +78,7 @@ export function RegistrationView(props) {
 							<FloatingLabel
 								className="mx-4 my-4"
 								controlId="birthdayInput"
-								label="Birthday"
+								label="Birthday (YYYY-MM-DD)"
 							>
 								<Form.Control
 									type="text"
