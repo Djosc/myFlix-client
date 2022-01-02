@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 class MovieView extends React.Component {
 	render() {
-		const { movieData, onBackClick } = this.props;
+		const { movieData, user, onBackClick } = this.props;
 
 		if (movieData.length === 0) return <div>No movies to display.</div>;
 
@@ -39,6 +39,9 @@ class MovieView extends React.Component {
 							<div className="movie-description">
 								<span className="value">{movieData.Description}</span>
 							</div>
+							<Button variant="warning" size="lg">
+								Add to Favorites
+							</Button>
 						</Stack>
 						<Button
 							className="mt-4"
@@ -74,6 +77,7 @@ MovieView.propTypes = {
 		ImagePath: PropTypes.string, //Maybe need to make this required
 		Featured: PropTypes.bool.isRequired,
 	}).isRequired,
+	user: PropTypes.bool.isRequired,
 	onBackClick: PropTypes.func.isRequired,
 };
 

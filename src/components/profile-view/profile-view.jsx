@@ -72,12 +72,9 @@ class ProfileView extends React.Component {
 					Birthday: response.data.Birthday,
 				});
 
-				localStorage.setItem('user', this.setState.Username);
-				var userN = localStorage.getItem('user');
-				console.log(userN);
-				console.log(username);
+				localStorage.setItem('user', this.state.Username);
 				alert('Profile has been updated');
-				window.open(`users/${this.state.Username}`, '_self');
+				window.location.reload();
 			})
 			.catch((err) => console.log(err));
 	};
