@@ -10,7 +10,7 @@ import {
 	FloatingLabel,
 	Form,
 } from 'react-bootstrap';
-import { useState } from 'react'
+import { useState } from 'react';
 
 import UserInfo from './user-info';
 // import UserUpdateForm from './user-update-form';
@@ -24,10 +24,11 @@ class ProfileView extends React.Component {
 			Email: null,
 			Birthday: null,
 			FavoriteMovies: [],
+			usernameErr: '',
+			passwordErr: '',
+			emailErr: '',
 		};
 	}
-
-	const [error, setError] = useState('')
 
 	componentDidMount() {
 		const authToken = localStorage.getItem('token');
@@ -57,30 +58,33 @@ class ProfileView extends React.Component {
 		const username = localStorage.getItem('user');
 		const authToken = localStorage.getItem('token');
 
-		axios
-			.put(
-				`https://david-caldwell-myflix.herokuapp.com/users/${username}`,
-				{
-					Username: this.state.Username,
-					Password: this.state.Password,
-					Email: this.state.Email,
-					Birthday: this.state.Birthday,
-				},
-				{ headers: { Authorization: `Bearer ${authToken}` } }
-			)
-			.then((response) => {
-				this.setState({
-					Username: response.data.Username,
-					Password: response.data.Password,
-					Email: response.data.Email,
-					Birthday: response.data.Birthday,
-				});
+		let isReq = this.validate();
+		if (isReq) {
+			axios
+				.put(
+					`https://david-caldwell-myflix.herokuapp.com/users/${username}`,
+					{
+						Username: this.state.Username,
+						Password: this.state.Password,
+						Email: this.state.Email,
+						Birthday: this.state.Birthday,
+					},
+					{ headers: { Authorization: `Bearer ${authToken}` } }
+				)
+				.then((response) => {
+					this.setState({
+						Username: response.data.Username,
+						Password: response.data.Password,
+						Email: response.data.Email,
+						Birthday: response.data.Birthday,
+					});
 
-				localStorage.setItem('user', this.state.Username);
-				alert('Profile has been updated');
-				window.location.reload();
-			})
-			.catch((err) => console.log(err));
+					localStorage.setItem('user', this.state.Username);
+					alert('Profile has been updated');
+					window.location.reload();
+				})
+				.catch((err) => console.log(err));
+		}
 	};
 
 	deleteUser = (e) => {
@@ -101,6 +105,24 @@ class ProfileView extends React.Component {
 			});
 	};
 
+	validate = () => {
+		let isReq = true;
+		if (this.state.Username.length < 4) {
+			this.setUsernameErr('Username must be at least 4 characters long');
+			isReq = false;
+		}
+		if (this.state.Password.length < 8) {
+			this.setPasswordErr('Password must be at least 8 characters long');
+			isReq = false;
+		}
+		if (this.state.Email.indexOf('@') === -1) {
+			this.setEmailErr('Enter Valid Email Address');
+			isReq = false;
+		}
+
+		return isReq;
+	};
+
 	setUsername(value) {
 		this.state.Username = value;
 	}
@@ -117,8 +139,16 @@ class ProfileView extends React.Component {
 		this.state.Birthday = value;
 	}
 
-	validate = () => {
+	setusernameErr(value) {
+		this.state.usernameErr = value;
+	}
 
+	setpasswordErr(value) {
+		this.state.passwordErr = value;
+	}
+
+	setemailErr(value) {
+		this.state.emailErr = value;
 	}
 
 	render() {
