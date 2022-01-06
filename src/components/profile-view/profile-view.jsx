@@ -17,6 +17,8 @@ import { useState } from 'react';
 
 import UserInfo from './user-info';
 
+import './profile-view.scss';
+
 function ProfileView({ movies, onBackClick, user, userData }) {
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
@@ -99,87 +101,94 @@ function ProfileView({ movies, onBackClick, user, userData }) {
 	};
 
 	return (
-		<Row>
-			<Col>
-				<UserInfo
-					userName={userData.Username}
-					passWord={userData.Password}
-					email={userData.Email}
-					birthday={userData.Birthday}
-					favoriteMovies={userData.FavoriteMovies}
-					userData={userData}
-					movies={movies}
-				/>
-			</Col>
-			<Col>
-				<Card>
-					<Card.Body className="text-center py-4">
-						<Card.Title as="h2">Update Account Details</Card.Title>
-						<FloatingLabel
-							className="mx-4 my-4"
-							controlId="usernameInput"
-							label="Username"
-						>
-							<Form.Control
-								type="text"
-								onChange={(e) => setUsername(e.target.value)}
-								placeholder="Username Example"
-							/>
-						</FloatingLabel>
-						<FloatingLabel
-							className="mx-4 my-4"
-							controlId="passwordInput"
-							label="Password (must be at least 8 characters)"
-						>
-							<Form.Control
-								type="text"
-								onChange={(e) => setPassword(e.target.value)}
-								placeholder="Password Example"
-							/>
-						</FloatingLabel>
-						<FloatingLabel className="mx-4 my-4" controlId="emailInput" label="Email">
-							<Form.Control
-								type="text"
-								onChange={(e) => setEmail(e.target.value)}
-								placeholder="email Example"
-							/>
-						</FloatingLabel>
-						<FloatingLabel
-							className="mx-4 my-4"
-							controlId="birthdayInput"
-							label="Birthday (YYYY-MM-DD)"
-						>
-							<Form.Control
-								type="text"
-								onChange={(e) => setBirthday(e.target.value)}
-								placeholder="Birthday Example"
-							/>
-						</FloatingLabel>
-						<Button
-							className="mx-4"
-							size="lg"
-							variant="primary"
-							type="submit"
-							onClick={updateUser}
-						>
-							Update
-						</Button>
-						<Button
-							className="mx-4"
-							size="lg"
-							variant="danger"
-							type="submit"
-							onClick={deleteUser}
-						>
-							Delete Account
-						</Button>
-					</Card.Body>
-				</Card>
-			</Col>
-			<Button className="" variant="primary" size="lg" onClick={() => onBackClick()}>
-				Back
-			</Button>
-		</Row>
+		<>
+			<Row className="justify-content-center">
+				<Col md={6} sm={10} className="">
+					<UserInfo
+						userName={userData.Username}
+						passWord={userData.Password}
+						email={userData.Email}
+						birthday={userData.Birthday}
+						favoriteMovies={userData.FavoriteMovies}
+						movies={movies}
+					/>
+				</Col>
+
+				<Col md={6} sm={10}>
+					<Card>
+						<Card.Body className="text-center py-4">
+							<Card.Title as="h2">Update Account Details</Card.Title>
+							<FloatingLabel
+								className="mx-4 my-4"
+								controlId="usernameInput"
+								label="Username"
+							>
+								<Form.Control
+									type="text"
+									onChange={(e) => setUsername(e.target.value)}
+									placeholder="Username Example"
+								/>
+							</FloatingLabel>
+							<FloatingLabel
+								className="mx-4 my-4"
+								controlId="passwordInput"
+								label="Password (must be at least 8 characters)"
+							>
+								<Form.Control
+									type="text"
+									onChange={(e) => setPassword(e.target.value)}
+									placeholder="Password Example"
+								/>
+							</FloatingLabel>
+							<FloatingLabel className="mx-4 my-4" controlId="emailInput" label="Email">
+								<Form.Control
+									type="text"
+									onChange={(e) => setEmail(e.target.value)}
+									placeholder="email Example"
+								/>
+							</FloatingLabel>
+							<FloatingLabel
+								className="mx-4 my-4"
+								controlId="birthdayInput"
+								label="Birthday (YYYY-MM-DD)"
+							>
+								<Form.Control
+									type="text"
+									onChange={(e) => setBirthday(e.target.value)}
+									placeholder="Birthday Example"
+								/>
+							</FloatingLabel>
+							<Button
+								className="mx-4"
+								size="lg"
+								variant="primary"
+								type="submit"
+								onClick={updateUser}
+							>
+								Update
+							</Button>
+							<Button
+								className="mx-4"
+								size="lg"
+								variant="danger"
+								type="submit"
+								onClick={deleteUser}
+							>
+								Delete Account
+							</Button>
+						</Card.Body>
+					</Card>
+				</Col>
+				<Button
+					className="back-button"
+					variant="primary"
+					size="lg"
+					onClick={() => onBackClick()}
+				>
+					Back
+				</Button>
+			</Row>
+		</>
 	);
 }
 

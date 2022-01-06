@@ -15,11 +15,15 @@ function MoviesList(props) {
 	const { movies, visibilityFilter } = props;
 	let filteredMovies = movies;
 
+	console.log(filteredMovies);
+
 	if (visibilityFilter !== '') {
-		filteredMovies = movies
-			.filter((m) => m.Title.toLowerCase())
-			.includes(visibilityFilter.toLowerCase());
+		filteredMovies = movies.filter((m) =>
+			m.Title.toLowerCase().includes(visibilityFilter.toLowerCase())
+		);
 	}
+
+	console.log(filteredMovies);
 
 	if (!movies) return <div className="main-view" />;
 

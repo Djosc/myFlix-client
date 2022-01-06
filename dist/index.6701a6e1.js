@@ -947,6 +947,11 @@ var _reactDom = require("react-dom");
 var _reactDomDefault = parcelHelpers.interopDefault(_reactDom);
 var _redux = require("redux");
 var _reactRedux = require("react-redux");
+// Redux persist lib to maintain state on reload
+var _reduxPersist = require("redux-persist");
+var _storage = require("redux-persist/lib/storage");
+var _storageDefault = parcelHelpers.interopDefault(_storage);
+var _react1 = require("redux-persist/integration/react");
 var _reduxDevtoolsExtension = require("redux-devtools-extension");
 var _reducers = require("./reducers/reducers");
 var _reducersDefault = parcelHelpers.interopDefault(_reducers);
@@ -959,7 +964,14 @@ var _navbarDefault = parcelHelpers.interopDefault(_navbar);
 // Import statement to indicate that you need to bundle `./index.scss`
 var _indexScss = require("./index.scss");
 // Create central store for the entire app to access
-const store = _redux.createStore(_reducersDefault.default, _reduxDevtoolsExtension.devToolsEnhancer());
+const persistConfig = {
+    key: 'root',
+    storage: _storageDefault.default
+};
+// const store = createStore(moviesApp, devToolsEnhancer());
+const persistedReducer = _reduxPersist.persistReducer(persistConfig, _reducersDefault.default);
+let store = _redux.createStore(persistedReducer);
+let persistor = _reduxPersist.persistStore(store);
 // Main component
 class MyFlixApplication extends _reactDefault.default.Component {
     render() {
@@ -969,22 +981,31 @@ class MyFlixApplication extends _reactDefault.default.Component {
                     store: store,
                     __source: {
                         fileName: "src/index.jsx",
-                        lineNumber: 23
+                        lineNumber: 39
                     },
                     __self: this,
-                    children: /*#__PURE__*/ _jsxRuntime.jsx(_containerDefault.default, {
-                        fluid: "true",
+                    children: /*#__PURE__*/ _jsxRuntime.jsx(_react1.PersistGate, {
+                        loading: null,
+                        persistor: persistor,
                         __source: {
                             fileName: "src/index.jsx",
-                            lineNumber: 24
+                            lineNumber: 40
                         },
                         __self: this,
-                        children: /*#__PURE__*/ _jsxRuntime.jsx(_mainViewDefault.default, {
+                        children: /*#__PURE__*/ _jsxRuntime.jsx(_containerDefault.default, {
+                            fluid: "true",
                             __source: {
                                 fileName: "src/index.jsx",
-                                lineNumber: 25
+                                lineNumber: 41
                             },
-                            __self: this
+                            __self: this,
+                            children: /*#__PURE__*/ _jsxRuntime.jsx(_mainViewDefault.default, {
+                                __source: {
+                                    fileName: "src/index.jsx",
+                                    lineNumber: 42
+                                },
+                                __self: this
+                            })
                         })
                     })
                 })
@@ -1002,7 +1023,7 @@ _reactDomDefault.default.render(/*#__PURE__*/ _reactDefault.default.createElemen
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-runtime":"8xIwr","react":"6TuXu","react-dom":"gkWJK","./index.scss":"jUTZ8","@parcel/transformer-js/src/esmodule-helpers.js":"eBqip","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"jVIvJ","./components/main-view/main-view":"2zHas","react-bootstrap/Container":"2PRIq","./components/navbar/navbar":"63yS7","redux":"4d0QS","react-redux":"2L0if","./reducers/reducers":"btgQW","redux-devtools-extension":"8GWVf"}],"8xIwr":[function(require,module,exports) {
+},{"react/jsx-runtime":"8xIwr","react":"6TuXu","react-dom":"gkWJK","./index.scss":"jUTZ8","@parcel/transformer-js/src/esmodule-helpers.js":"eBqip","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"jVIvJ","./components/main-view/main-view":"2zHas","react-bootstrap/Container":"2PRIq","./components/navbar/navbar":"63yS7","redux":"4d0QS","react-redux":"2L0if","./reducers/reducers":"btgQW","redux-devtools-extension":"8GWVf","redux-persist":"cvgs6","redux-persist/lib/storage":"4PpbC","redux-persist/integration/react":"4qJaf"}],"8xIwr":[function(require,module,exports) {
 'use strict';
 module.exports = require('./cjs/react-jsx-runtime.development.js');
 
@@ -22995,6 +23016,8 @@ class MainView extends _reactDefault.default.Component {
                 Birthday: response.data.Birthday,
                 FavoriteMovies: response.data.FavoriteMovies
             });
+            console.log(response);
+            localStorage.setItem('userData', JSON.stringify(response.data));
         }).catch((err)=>console.log(err)
         );
     }
@@ -23038,7 +23061,7 @@ class MainView extends _reactDefault.default.Component {
         return(/*#__PURE__*/ _jsxRuntime.jsxs(_reactRouterDom.BrowserRouter, {
             __source: {
                 fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 126
+                lineNumber: 128
             },
             __self: this,
             children: [
@@ -23046,7 +23069,7 @@ class MainView extends _reactDefault.default.Component {
                     user: user,
                     __source: {
                         fileName: "src/components/main-view/main-view.jsx",
-                        lineNumber: 127
+                        lineNumber: 129
                     },
                     __self: this
                 }),
@@ -23056,14 +23079,14 @@ class MainView extends _reactDefault.default.Component {
                     },
                     __source: {
                         fileName: "src/components/main-view/main-view.jsx",
-                        lineNumber: 128
+                        lineNumber: 130
                     },
                     __self: this,
                     children: /*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Row, {
                         className: "main-view justify-content-md-center mt-4 pt-2",
                         __source: {
                             fileName: "src/components/main-view/main-view.jsx",
-                            lineNumber: 129
+                            lineNumber: 131
                         },
                         __self: this,
                         children: [
@@ -23083,7 +23106,7 @@ class MainView extends _reactDefault.default.Component {
                                 },
                                 __source: {
                                     fileName: "src/components/main-view/main-view.jsx",
-                                    lineNumber: 130
+                                    lineNumber: 132
                                 },
                                 __self: this
                             }),
@@ -23100,7 +23123,7 @@ class MainView extends _reactDefault.default.Component {
                                 },
                                 __source: {
                                     fileName: "src/components/main-view/main-view.jsx",
-                                    lineNumber: 141
+                                    lineNumber: 143
                                 },
                                 __self: this
                             }),
@@ -23127,7 +23150,7 @@ class MainView extends _reactDefault.default.Component {
                                 },
                                 __source: {
                                     fileName: "src/components/main-view/main-view.jsx",
-                                    lineNumber: 153
+                                    lineNumber: 155
                                 },
                                 __self: this
                             }),
@@ -23154,7 +23177,7 @@ class MainView extends _reactDefault.default.Component {
                                 },
                                 __source: {
                                     fileName: "src/components/main-view/main-view.jsx",
-                                    lineNumber: 172
+                                    lineNumber: 174
                                 },
                                 __self: this
                             }),
@@ -23181,7 +23204,7 @@ class MainView extends _reactDefault.default.Component {
                                 },
                                 __source: {
                                     fileName: "src/components/main-view/main-view.jsx",
-                                    lineNumber: 192
+                                    lineNumber: 194
                                 },
                                 __self: this
                             }),
@@ -23206,7 +23229,7 @@ class MainView extends _reactDefault.default.Component {
                                 },
                                 __source: {
                                     fileName: "src/components/main-view/main-view.jsx",
-                                    lineNumber: 210
+                                    lineNumber: 212
                                 },
                                 __self: this
                             })
@@ -41897,6 +41920,7 @@ var _reactRedux = require("react-redux");
 var _actions = require("../../actions/actions");
 var _userInfo = require("./user-info");
 var _userInfoDefault = parcelHelpers.interopDefault(_userInfo);
+var _profileViewScss = require("./profile-view.scss");
 var _s = $RefreshSig$();
 function ProfileView({ movies , onBackClick , user , userData  }) {
     _s();
@@ -41968,191 +41992,198 @@ function ProfileView({ movies , onBackClick , user , userData  }) {
         }
         return isReq;
     };
-    return(/*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Row, {
-        __source: {
-            fileName: "src/components/profile-view/profile-view.jsx",
-            lineNumber: 102
-        },
-        __self: this,
-        children: [
-            /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Col, {
-                __source: {
-                    fileName: "src/components/profile-view/profile-view.jsx",
-                    lineNumber: 103
-                },
-                __self: this,
-                children: /*#__PURE__*/ _jsxRuntime.jsx(_userInfoDefault.default, {
-                    userName: userData.Username,
-                    passWord: userData.Password,
-                    email: userData.Email,
-                    birthday: userData.Birthday,
-                    favoriteMovies: userData.FavoriteMovies,
-                    userData: userData,
-                    movies: movies,
+    return(/*#__PURE__*/ _jsxRuntime.jsx(_jsxRuntime.Fragment, {
+        children: /*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Row, {
+            className: "justify-content-center",
+            __source: {
+                fileName: "src/components/profile-view/profile-view.jsx",
+                lineNumber: 105
+            },
+            __self: this,
+            children: [
+                /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Col, {
+                    md: 6,
+                    sm: 10,
+                    className: "",
                     __source: {
                         fileName: "src/components/profile-view/profile-view.jsx",
-                        lineNumber: 104
-                    },
-                    __self: this
-                })
-            }),
-            /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Col, {
-                __source: {
-                    fileName: "src/components/profile-view/profile-view.jsx",
-                    lineNumber: 114
-                },
-                __self: this,
-                children: /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Card, {
-                    __source: {
-                        fileName: "src/components/profile-view/profile-view.jsx",
-                        lineNumber: 115
+                        lineNumber: 106
                     },
                     __self: this,
-                    children: /*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Card.Body, {
-                        className: "text-center py-4",
+                    children: /*#__PURE__*/ _jsxRuntime.jsx(_userInfoDefault.default, {
+                        userName: userData.Username,
+                        passWord: userData.Password,
+                        email: userData.Email,
+                        birthday: userData.Birthday,
+                        favoriteMovies: userData.FavoriteMovies,
+                        movies: movies,
                         __source: {
                             fileName: "src/components/profile-view/profile-view.jsx",
-                            lineNumber: 116
+                            lineNumber: 107
+                        },
+                        __self: this
+                    })
+                }),
+                /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Col, {
+                    md: 6,
+                    sm: 10,
+                    __source: {
+                        fileName: "src/components/profile-view/profile-view.jsx",
+                        lineNumber: 117
+                    },
+                    __self: this,
+                    children: /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Card, {
+                        __source: {
+                            fileName: "src/components/profile-view/profile-view.jsx",
+                            lineNumber: 118
                         },
                         __self: this,
-                        children: [
-                            /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Card.Title, {
-                                as: "h2",
-                                __source: {
-                                    fileName: "src/components/profile-view/profile-view.jsx",
-                                    lineNumber: 117
-                                },
-                                __self: this,
-                                children: "Update Account Details"
-                            }),
-                            /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.FloatingLabel, {
-                                className: "mx-4 my-4",
-                                controlId: "usernameInput",
-                                label: "Username",
-                                __source: {
-                                    fileName: "src/components/profile-view/profile-view.jsx",
-                                    lineNumber: 118
-                                },
-                                __self: this,
-                                children: /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Form.Control, {
-                                    type: "text",
-                                    onChange: (e)=>setUsername(e.target.value)
-                                    ,
-                                    placeholder: "Username Example",
+                        children: /*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Card.Body, {
+                            className: "text-center py-4",
+                            __source: {
+                                fileName: "src/components/profile-view/profile-view.jsx",
+                                lineNumber: 119
+                            },
+                            __self: this,
+                            children: [
+                                /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Card.Title, {
+                                    as: "h2",
                                     __source: {
                                         fileName: "src/components/profile-view/profile-view.jsx",
-                                        lineNumber: 123
+                                        lineNumber: 120
                                     },
-                                    __self: this
-                                })
-                            }),
-                            /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.FloatingLabel, {
-                                className: "mx-4 my-4",
-                                controlId: "passwordInput",
-                                label: "Password (must be at least 8 characters)",
-                                __source: {
-                                    fileName: "src/components/profile-view/profile-view.jsx",
-                                    lineNumber: 129
-                                },
-                                __self: this,
-                                children: /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Form.Control, {
-                                    type: "text",
-                                    onChange: (e)=>setPassword(e.target.value)
-                                    ,
-                                    placeholder: "Password Example",
+                                    __self: this,
+                                    children: "Update Account Details"
+                                }),
+                                /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.FloatingLabel, {
+                                    className: "mx-4 my-4",
+                                    controlId: "usernameInput",
+                                    label: "Username",
                                     __source: {
                                         fileName: "src/components/profile-view/profile-view.jsx",
-                                        lineNumber: 134
+                                        lineNumber: 121
                                     },
-                                    __self: this
-                                })
-                            }),
-                            /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.FloatingLabel, {
-                                className: "mx-4 my-4",
-                                controlId: "emailInput",
-                                label: "Email",
-                                __source: {
-                                    fileName: "src/components/profile-view/profile-view.jsx",
-                                    lineNumber: 140
-                                },
-                                __self: this,
-                                children: /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Form.Control, {
-                                    type: "text",
-                                    onChange: (e)=>setEmail(e.target.value)
-                                    ,
-                                    placeholder: "email Example",
+                                    __self: this,
+                                    children: /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Form.Control, {
+                                        type: "text",
+                                        onChange: (e)=>setUsername(e.target.value)
+                                        ,
+                                        placeholder: "Username Example",
+                                        __source: {
+                                            fileName: "src/components/profile-view/profile-view.jsx",
+                                            lineNumber: 126
+                                        },
+                                        __self: this
+                                    })
+                                }),
+                                /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.FloatingLabel, {
+                                    className: "mx-4 my-4",
+                                    controlId: "passwordInput",
+                                    label: "Password (must be at least 8 characters)",
                                     __source: {
                                         fileName: "src/components/profile-view/profile-view.jsx",
-                                        lineNumber: 141
+                                        lineNumber: 132
                                     },
-                                    __self: this
-                                })
-                            }),
-                            /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.FloatingLabel, {
-                                className: "mx-4 my-4",
-                                controlId: "birthdayInput",
-                                label: "Birthday (YYYY-MM-DD)",
-                                __source: {
-                                    fileName: "src/components/profile-view/profile-view.jsx",
-                                    lineNumber: 147
-                                },
-                                __self: this,
-                                children: /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Form.Control, {
-                                    type: "text",
-                                    onChange: (e)=>setBirthday(e.target.value)
-                                    ,
-                                    placeholder: "Birthday Example",
+                                    __self: this,
+                                    children: /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Form.Control, {
+                                        type: "text",
+                                        onChange: (e)=>setPassword(e.target.value)
+                                        ,
+                                        placeholder: "Password Example",
+                                        __source: {
+                                            fileName: "src/components/profile-view/profile-view.jsx",
+                                            lineNumber: 137
+                                        },
+                                        __self: this
+                                    })
+                                }),
+                                /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.FloatingLabel, {
+                                    className: "mx-4 my-4",
+                                    controlId: "emailInput",
+                                    label: "Email",
                                     __source: {
                                         fileName: "src/components/profile-view/profile-view.jsx",
-                                        lineNumber: 152
+                                        lineNumber: 143
                                     },
-                                    __self: this
+                                    __self: this,
+                                    children: /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Form.Control, {
+                                        type: "text",
+                                        onChange: (e)=>setEmail(e.target.value)
+                                        ,
+                                        placeholder: "email Example",
+                                        __source: {
+                                            fileName: "src/components/profile-view/profile-view.jsx",
+                                            lineNumber: 144
+                                        },
+                                        __self: this
+                                    })
+                                }),
+                                /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.FloatingLabel, {
+                                    className: "mx-4 my-4",
+                                    controlId: "birthdayInput",
+                                    label: "Birthday (YYYY-MM-DD)",
+                                    __source: {
+                                        fileName: "src/components/profile-view/profile-view.jsx",
+                                        lineNumber: 150
+                                    },
+                                    __self: this,
+                                    children: /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Form.Control, {
+                                        type: "text",
+                                        onChange: (e)=>setBirthday(e.target.value)
+                                        ,
+                                        placeholder: "Birthday Example",
+                                        __source: {
+                                            fileName: "src/components/profile-view/profile-view.jsx",
+                                            lineNumber: 155
+                                        },
+                                        __self: this
+                                    })
+                                }),
+                                /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Button, {
+                                    className: "mx-4",
+                                    size: "lg",
+                                    variant: "primary",
+                                    type: "submit",
+                                    onClick: updateUser,
+                                    __source: {
+                                        fileName: "src/components/profile-view/profile-view.jsx",
+                                        lineNumber: 161
+                                    },
+                                    __self: this,
+                                    children: "Update"
+                                }),
+                                /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Button, {
+                                    className: "mx-4",
+                                    size: "lg",
+                                    variant: "danger",
+                                    type: "submit",
+                                    onClick: deleteUser,
+                                    __source: {
+                                        fileName: "src/components/profile-view/profile-view.jsx",
+                                        lineNumber: 170
+                                    },
+                                    __self: this,
+                                    children: "Delete Account"
                                 })
-                            }),
-                            /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Button, {
-                                className: "mx-4",
-                                size: "lg",
-                                variant: "primary",
-                                type: "submit",
-                                onClick: updateUser,
-                                __source: {
-                                    fileName: "src/components/profile-view/profile-view.jsx",
-                                    lineNumber: 158
-                                },
-                                __self: this,
-                                children: "Update"
-                            }),
-                            /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Button, {
-                                className: "mx-4",
-                                size: "lg",
-                                variant: "danger",
-                                type: "submit",
-                                onClick: deleteUser,
-                                __source: {
-                                    fileName: "src/components/profile-view/profile-view.jsx",
-                                    lineNumber: 167
-                                },
-                                __self: this,
-                                children: "Delete Account"
-                            })
-                        ]
+                            ]
+                        })
                     })
+                }),
+                /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Button, {
+                    className: "back-button",
+                    variant: "primary",
+                    size: "lg",
+                    onClick: ()=>onBackClick()
+                    ,
+                    __source: {
+                        fileName: "src/components/profile-view/profile-view.jsx",
+                        lineNumber: 182
+                    },
+                    __self: this,
+                    children: "Back"
                 })
-            }),
-            /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Button, {
-                className: "",
-                variant: "primary",
-                size: "lg",
-                onClick: ()=>onBackClick()
-                ,
-                __source: {
-                    fileName: "src/components/profile-view/profile-view.jsx",
-                    lineNumber: 179
-                },
-                __self: this,
-                children: "Back"
-            })
-        ]
+            ]
+        })
     }));
 }
 _s(ProfileView, "inh2D4xaKqr2dNam+Xg8BctszGI=");
@@ -42174,7 +42205,7 @@ $RefreshReg$(_c, "ProfileView");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-runtime":"8xIwr","react":"6TuXu","axios":"iYoWk","react-bootstrap":"h2YVd","./user-info":"cK8m8","@parcel/transformer-js/src/esmodule-helpers.js":"eBqip","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"jVIvJ","react-redux":"2L0if","../../actions/actions":"1Ttfj"}],"cK8m8":[function(require,module,exports) {
+},{"react/jsx-runtime":"8xIwr","react":"6TuXu","axios":"iYoWk","react-bootstrap":"h2YVd","./user-info":"cK8m8","@parcel/transformer-js/src/esmodule-helpers.js":"eBqip","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"jVIvJ","react-redux":"2L0if","../../actions/actions":"1Ttfj","./profile-view.scss":"gb0ga"}],"cK8m8":[function(require,module,exports) {
 var $parcel$ReactRefreshHelpers$94e5 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
@@ -42192,19 +42223,23 @@ var _moment = require("moment");
 var _momentDefault = parcelHelpers.interopDefault(_moment);
 var _reactRedux = require("react-redux");
 var _actions = require("../../actions/actions");
-function UserInfo({ movies , userData , userName , email , birthday  }) {
+function UserInfo({ movies , userName , email , birthday , userData  }) {
+    // Retrieving this from local storage because of redux losing state when refreshing
+    // const userData1 = localStorage.getItem('userData');
+    // const userData2 = JSON.parse(userData1);
+    // console.log(userData1);
     return(/*#__PURE__*/ _jsxRuntime.jsxs(_jsxRuntime.Fragment, {
         children: [
             /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Card, {
                 __source: {
                     fileName: "src/components/profile-view/user-info.jsx",
-                    lineNumber: 12
+                    lineNumber: 16
                 },
                 __self: this,
                 children: /*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Card.Body, {
                     __source: {
                         fileName: "src/components/profile-view/user-info.jsx",
-                        lineNumber: 13
+                        lineNumber: 17
                     },
                     __self: this,
                     children: [
@@ -42212,7 +42247,7 @@ function UserInfo({ movies , userData , userName , email , birthday  }) {
                             className: "text-center",
                             __source: {
                                 fileName: "src/components/profile-view/user-info.jsx",
-                                lineNumber: 14
+                                lineNumber: 18
                             },
                             __self: this,
                             children: "Account Details"
@@ -42220,7 +42255,7 @@ function UserInfo({ movies , userData , userName , email , birthday  }) {
                         /*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Card.Text, {
                             __source: {
                                 fileName: "src/components/profile-view/user-info.jsx",
-                                lineNumber: 15
+                                lineNumber: 19
                             },
                             __self: this,
                             children: [
@@ -42231,7 +42266,7 @@ function UserInfo({ movies , userData , userName , email , birthday  }) {
                         /*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Card.Text, {
                             __source: {
                                 fileName: "src/components/profile-view/user-info.jsx",
-                                lineNumber: 16
+                                lineNumber: 20
                             },
                             __self: this,
                             children: [
@@ -42242,7 +42277,7 @@ function UserInfo({ movies , userData , userName , email , birthday  }) {
                         /*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Card.Text, {
                             __source: {
                                 fileName: "src/components/profile-view/user-info.jsx",
-                                lineNumber: 17
+                                lineNumber: 21
                             },
                             __self: this,
                             children: [
@@ -42256,13 +42291,13 @@ function UserInfo({ movies , userData , userName , email , birthday  }) {
             /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Card, {
                 __source: {
                     fileName: "src/components/profile-view/user-info.jsx",
-                    lineNumber: 20
+                    lineNumber: 24
                 },
                 __self: this,
                 children: /*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Card.Body, {
                     __source: {
                         fileName: "src/components/profile-view/user-info.jsx",
-                        lineNumber: 21
+                        lineNumber: 25
                     },
                     __self: this,
                     children: [
@@ -42270,45 +42305,42 @@ function UserInfo({ movies , userData , userName , email , birthday  }) {
                             className: "text-center",
                             __source: {
                                 fileName: "src/components/profile-view/user-info.jsx",
-                                lineNumber: 22
+                                lineNumber: 26
                             },
                             __self: this,
                             children: "Favorite Movies"
                         }),
-                        /*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.ListGroup, {
+                        /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.ListGroup, {
                             className: "text-center",
                             __source: {
                                 fileName: "src/components/profile-view/user-info.jsx",
-                                lineNumber: 23
+                                lineNumber: 27
                             },
                             __self: this,
-                            children: [
-                                console.log(userData.FavoriteMovies),
-                                userData.FavoriteMovies.map((favId, index)=>{
-                                    let movie = movies.find((m)=>m._id === favId
-                                    );
-                                    return(/*#__PURE__*/ _jsxRuntime.jsxs(_reactRouterDom.Link, {
-                                        to: `/movies/${favId}`,
-                                        __source: {
-                                            fileName: "src/components/profile-view/user-info.jsx",
-                                            lineNumber: 28
-                                        },
-                                        __self: this,
-                                        children: [
-                                            ' ',
-                                            /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.ListGroup.Item, {
-                                                __source: {
-                                                    fileName: "src/components/profile-view/user-info.jsx",
-                                                    lineNumber: 30
-                                                },
-                                                __self: this,
-                                                children: movie.Title
-                                            }, index),
-                                            ' '
-                                        ]
-                                    }));
-                                })
-                            ]
+                            children: userData.FavoriteMovies.map((favId, index)=>{
+                                let movie = movies.find((m)=>m._id === favId
+                                );
+                                return(/*#__PURE__*/ _jsxRuntime.jsxs(_reactRouterDom.Link, {
+                                    to: `/movies/${favId}`,
+                                    __source: {
+                                        fileName: "src/components/profile-view/user-info.jsx",
+                                        lineNumber: 31
+                                    },
+                                    __self: this,
+                                    children: [
+                                        ' ',
+                                        /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.ListGroup.Item, {
+                                            __source: {
+                                                fileName: "src/components/profile-view/user-info.jsx",
+                                                lineNumber: 33
+                                            },
+                                            __self: this,
+                                            children: movie.Title
+                                        }, index),
+                                        ' '
+                                    ]
+                                }));
+                            })
                         })
                     ]
                 })
@@ -46056,7 +46088,7 @@ $RefreshReg$(_c, "UserInfo");
     return hooks;
 });
 
-},{}],"63yS7":[function(require,module,exports) {
+},{}],"gb0ga":[function() {},{}],"63yS7":[function(require,module,exports) {
 var $parcel$ReactRefreshHelpers$1bb2 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
@@ -46314,13 +46346,15 @@ const mapStateToProps = (state)=>{
 function MoviesList(props) {
     const { movies , visibilityFilter  } = props;
     let filteredMovies = movies;
-    if (visibilityFilter !== '') filteredMovies = movies.filter((m)=>m.Title.toLowerCase()
-    ).includes(visibilityFilter.toLowerCase());
+    console.log(filteredMovies);
+    if (visibilityFilter !== '') filteredMovies = movies.filter((m)=>m.Title.toLowerCase().includes(visibilityFilter.toLowerCase())
+    );
+    console.log(filteredMovies);
     if (!movies) return(/*#__PURE__*/ _jsxRuntime.jsx("div", {
         className: "main-view",
         __source: {
             fileName: "src/components/movies-list/movies-list.jsx",
-            lineNumber: 24
+            lineNumber: 28
         },
         __self: this
     }));
@@ -46331,14 +46365,14 @@ function MoviesList(props) {
                 className: "mb-4",
                 __source: {
                     fileName: "src/components/movies-list/movies-list.jsx",
-                    lineNumber: 28
+                    lineNumber: 32
                 },
                 __self: this,
                 children: /*#__PURE__*/ _jsxRuntime.jsx(_visibilityFilterInputDefault.default, {
                     visibilityFilter: visibilityFilter,
                     __source: {
                         fileName: "src/components/movies-list/movies-list.jsx",
-                        lineNumber: 29
+                        lineNumber: 33
                     },
                     __self: this
                 })
@@ -46349,14 +46383,14 @@ function MoviesList(props) {
                     sm: 6,
                     __source: {
                         fileName: "src/components/movies-list/movies-list.jsx",
-                        lineNumber: 32
+                        lineNumber: 36
                     },
                     __self: this,
                     children: /*#__PURE__*/ _jsxRuntime.jsx(_movieCardDefault.default, {
                         movie: m,
                         __source: {
                             fileName: "src/components/movies-list/movies-list.jsx",
-                            lineNumber: 33
+                            lineNumber: 37
                         },
                         __self: this
                     })
@@ -47132,6 +47166,1010 @@ exports.devToolsEnhancer = typeof window !== 'undefined' && window.__REDUX_DEVTO
     };
 };
 
-},{"redux":"4d0QS"}]},["2Farv","fHDwL","dLPEP"], "dLPEP", "parcelRequireaec4")
+},{"redux":"4d0QS"}],"cvgs6":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "persistReducer", ()=>_persistReducerDefault.default
+);
+parcelHelpers.export(exports, "persistCombineReducers", ()=>_persistCombineReducersDefault.default
+);
+parcelHelpers.export(exports, "persistStore", ()=>_persistStoreDefault.default
+);
+parcelHelpers.export(exports, "createMigrate", ()=>_createMigrateDefault.default
+);
+parcelHelpers.export(exports, "createTransform", ()=>_createTransformDefault.default
+);
+parcelHelpers.export(exports, "getStoredState", ()=>_getStoredStateDefault.default
+);
+parcelHelpers.export(exports, "createPersistoid", ()=>_createPersistoidDefault.default
+);
+parcelHelpers.export(exports, "purgeStoredState", ()=>_purgeStoredStateDefault.default
+);
+var _persistReducer = require("./persistReducer");
+var _persistReducerDefault = parcelHelpers.interopDefault(_persistReducer);
+var _persistCombineReducers = require("./persistCombineReducers");
+var _persistCombineReducersDefault = parcelHelpers.interopDefault(_persistCombineReducers);
+var _persistStore = require("./persistStore");
+var _persistStoreDefault = parcelHelpers.interopDefault(_persistStore);
+var _createMigrate = require("./createMigrate");
+var _createMigrateDefault = parcelHelpers.interopDefault(_createMigrate);
+var _createTransform = require("./createTransform");
+var _createTransformDefault = parcelHelpers.interopDefault(_createTransform);
+var _getStoredState = require("./getStoredState");
+var _getStoredStateDefault = parcelHelpers.interopDefault(_getStoredState);
+var _createPersistoid = require("./createPersistoid");
+var _createPersistoidDefault = parcelHelpers.interopDefault(_createPersistoid);
+var _purgeStoredState = require("./purgeStoredState");
+var _purgeStoredStateDefault = parcelHelpers.interopDefault(_purgeStoredState);
+var _constants = require("./constants");
+parcelHelpers.exportAll(_constants, exports);
+
+},{"./persistReducer":"eAow8","./persistCombineReducers":"9Bukj","./persistStore":"fHEPT","./createMigrate":"ge1IH","./createTransform":"cmwf8","./getStoredState":"3zWrW","./createPersistoid":"hS8n4","./purgeStoredState":"bdRmU","./constants":"fqlAE","@parcel/transformer-js/src/esmodule-helpers.js":"eBqip"}],"eAow8":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _constants = require("./constants");
+var _autoMergeLevel1 = require("./stateReconciler/autoMergeLevel1");
+var _autoMergeLevel1Default = parcelHelpers.interopDefault(_autoMergeLevel1);
+var _createPersistoid = require("./createPersistoid");
+var _createPersistoidDefault = parcelHelpers.interopDefault(_createPersistoid);
+var _getStoredState = require("./getStoredState");
+var _getStoredStateDefault = parcelHelpers.interopDefault(_getStoredState);
+var _purgeStoredState = require("./purgeStoredState");
+var _purgeStoredStateDefault = parcelHelpers.interopDefault(_purgeStoredState);
+function ownKeys(object, enumerableOnly) {
+    var keys = Object.keys(object);
+    if (Object.getOwnPropertySymbols) {
+        var symbols = Object.getOwnPropertySymbols(object);
+        if (enumerableOnly) symbols = symbols.filter(function(sym) {
+            return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+        });
+        keys.push.apply(keys, symbols);
+    }
+    return keys;
+}
+function _objectSpread(target) {
+    for(var i = 1; i < arguments.length; i++){
+        var source = arguments[i] != null ? arguments[i] : {
+        };
+        if (i % 2) ownKeys(source, true).forEach(function(key) {
+            _defineProperty(target, key, source[key]);
+        });
+        else if (Object.getOwnPropertyDescriptors) Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+        else ownKeys(source).forEach(function(key) {
+            Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+        });
+    }
+    return target;
+}
+function _defineProperty(obj, key, value) {
+    if (key in obj) Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+    });
+    else obj[key] = value;
+    return obj;
+}
+function _objectWithoutProperties(source, excluded) {
+    if (source == null) return {
+    };
+    var target = _objectWithoutPropertiesLoose(source, excluded);
+    var key, i;
+    if (Object.getOwnPropertySymbols) {
+        var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
+        for(i = 0; i < sourceSymbolKeys.length; i++){
+            key = sourceSymbolKeys[i];
+            if (excluded.indexOf(key) >= 0) continue;
+            if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue;
+            target[key] = source[key];
+        }
+    }
+    return target;
+}
+function _objectWithoutPropertiesLoose(source, excluded) {
+    if (source == null) return {
+    };
+    var target = {
+    };
+    var sourceKeys = Object.keys(source);
+    var key, i;
+    for(i = 0; i < sourceKeys.length; i++){
+        key = sourceKeys[i];
+        if (excluded.indexOf(key) >= 0) continue;
+        target[key] = source[key];
+    }
+    return target;
+}
+var DEFAULT_TIMEOUT = 5000;
+function persistReducer(config, baseReducer) {
+    if (!config) throw new Error('config is required for persistReducer');
+    if (!config.key) throw new Error('key is required in persistor config');
+    if (!config.storage) throw new Error("redux-persist: config.storage is required. Try using one of the provided storage engines `import storage from 'redux-persist/lib/storage'`");
+    var version = config.version !== undefined ? config.version : _constants.DEFAULT_VERSION;
+    var debug = config.debug || false;
+    var stateReconciler = config.stateReconciler === undefined ? _autoMergeLevel1Default.default : config.stateReconciler;
+    var getStoredState = config.getStoredState || _getStoredStateDefault.default;
+    var timeout = config.timeout !== undefined ? config.timeout : DEFAULT_TIMEOUT;
+    var _persistoid = null;
+    var _purge = false;
+    var _paused = true;
+    var conditionalUpdate = function conditionalUpdate1(state) {
+        // update the persistoid only if we are rehydrated and not paused
+        state._persist.rehydrated && _persistoid && !_paused && _persistoid.update(state);
+        return state;
+    };
+    return function(state, action) {
+        var _ref = state || {
+        }, _persist = _ref._persist, rest = _objectWithoutProperties(_ref, [
+            "_persist"
+        ]); // $FlowIgnore need to update State type
+        var restState = rest;
+        if (action.type === _constants.PERSIST) {
+            var _sealed = false;
+            var _rehydrate = function _rehydrate1(payload, err) {
+                // dev warning if we are already sealed
+                if (_sealed) console.error("redux-persist: rehydrate for \"".concat(config.key, "\" called after timeout."), payload, err); // only rehydrate if we are not already sealed
+                if (!_sealed) {
+                    action.rehydrate(config.key, payload, err);
+                    _sealed = true;
+                }
+            };
+            timeout && setTimeout(function() {
+                !_sealed && _rehydrate(undefined, new Error("redux-persist: persist timed out for persist key \"".concat(config.key, "\"")));
+            }, timeout); // @NOTE PERSIST resumes if paused.
+            _paused = false; // @NOTE only ever create persistoid once, ensure we call it at least once, even if _persist has already been set
+            if (!_persistoid) _persistoid = _createPersistoidDefault.default(config); // @NOTE PERSIST can be called multiple times, noop after the first
+            if (_persist) // We still need to call the base reducer because there might be nested
+            // uses of persistReducer which need to be aware of the PERSIST action
+            return _objectSpread({
+            }, baseReducer(restState, action), {
+                _persist: _persist
+            });
+            if (typeof action.rehydrate !== 'function' || typeof action.register !== 'function') throw new Error('redux-persist: either rehydrate or register is not a function on the PERSIST action. This can happen if the action is being replayed. This is an unexplored use case, please open an issue and we will figure out a resolution.');
+            action.register(config.key);
+            getStoredState(config).then(function(restoredState) {
+                var migrate = config.migrate || function(s, v) {
+                    return Promise.resolve(s);
+                };
+                migrate(restoredState, version).then(function(migratedState) {
+                    _rehydrate(migratedState);
+                }, function(migrateErr) {
+                    if (migrateErr) console.error('redux-persist: migration error', migrateErr);
+                    _rehydrate(undefined, migrateErr);
+                });
+            }, function(err) {
+                _rehydrate(undefined, err);
+            });
+            return _objectSpread({
+            }, baseReducer(restState, action), {
+                _persist: {
+                    version: version,
+                    rehydrated: false
+                }
+            });
+        } else if (action.type === _constants.PURGE) {
+            _purge = true;
+            action.result(_purgeStoredStateDefault.default(config));
+            return _objectSpread({
+            }, baseReducer(restState, action), {
+                _persist: _persist
+            });
+        } else if (action.type === _constants.FLUSH) {
+            action.result(_persistoid && _persistoid.flush());
+            return _objectSpread({
+            }, baseReducer(restState, action), {
+                _persist: _persist
+            });
+        } else if (action.type === _constants.PAUSE) _paused = true;
+        else if (action.type === _constants.REHYDRATE) {
+            // noop on restState if purging
+            if (_purge) return _objectSpread({
+            }, restState, {
+                _persist: _objectSpread({
+                }, _persist, {
+                    rehydrated: true
+                }) // @NOTE if key does not match, will continue to default else below
+            });
+            if (action.key === config.key) {
+                var reducedState = baseReducer(restState, action);
+                var inboundState = action.payload; // only reconcile state if stateReconciler and inboundState are both defined
+                var reconciledRest = stateReconciler !== false && inboundState !== undefined ? stateReconciler(inboundState, state, reducedState, config) : reducedState;
+                var _newState = _objectSpread({
+                }, reconciledRest, {
+                    _persist: _objectSpread({
+                    }, _persist, {
+                        rehydrated: true
+                    })
+                });
+                return conditionalUpdate(_newState);
+            }
+        } // if we have not already handled PERSIST, straight passthrough
+        if (!_persist) return baseReducer(state, action); // run base reducer:
+        // is state modified ? return original : return updated
+        var newState = baseReducer(restState, action);
+        if (newState === restState) return state;
+        return conditionalUpdate(_objectSpread({
+        }, newState, {
+            _persist: _persist
+        }));
+    };
+}
+exports.default = persistReducer;
+
+},{"./constants":"fqlAE","./stateReconciler/autoMergeLevel1":"4l52P","./createPersistoid":"hS8n4","./getStoredState":"3zWrW","./purgeStoredState":"bdRmU","@parcel/transformer-js/src/esmodule-helpers.js":"eBqip"}],"fqlAE":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "KEY_PREFIX", ()=>KEY_PREFIX
+);
+parcelHelpers.export(exports, "FLUSH", ()=>FLUSH
+);
+parcelHelpers.export(exports, "REHYDRATE", ()=>REHYDRATE
+);
+parcelHelpers.export(exports, "PAUSE", ()=>PAUSE
+);
+parcelHelpers.export(exports, "PERSIST", ()=>PERSIST
+);
+parcelHelpers.export(exports, "PURGE", ()=>PURGE
+);
+parcelHelpers.export(exports, "REGISTER", ()=>REGISTER
+);
+parcelHelpers.export(exports, "DEFAULT_VERSION", ()=>DEFAULT_VERSION
+);
+var KEY_PREFIX = 'persist:';
+var FLUSH = 'persist/FLUSH';
+var REHYDRATE = 'persist/REHYDRATE';
+var PAUSE = 'persist/PAUSE';
+var PERSIST = 'persist/PERSIST';
+var PURGE = 'persist/PURGE';
+var REGISTER = 'persist/REGISTER';
+var DEFAULT_VERSION = -1;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"eBqip"}],"4l52P":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+function _typeof(obj) {
+    if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") _typeof = function _typeof1(obj1) {
+        return typeof obj1;
+    };
+    else _typeof = function _typeof2(obj1) {
+        return obj1 && typeof Symbol === "function" && obj1.constructor === Symbol && obj1 !== Symbol.prototype ? "symbol" : typeof obj1;
+    };
+    return _typeof(obj);
+}
+function ownKeys(object, enumerableOnly) {
+    var keys = Object.keys(object);
+    if (Object.getOwnPropertySymbols) {
+        var symbols = Object.getOwnPropertySymbols(object);
+        if (enumerableOnly) symbols = symbols.filter(function(sym) {
+            return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+        });
+        keys.push.apply(keys, symbols);
+    }
+    return keys;
+}
+function _objectSpread(target) {
+    for(var i = 1; i < arguments.length; i++){
+        var source = arguments[i] != null ? arguments[i] : {
+        };
+        if (i % 2) ownKeys(source, true).forEach(function(key) {
+            _defineProperty(target, key, source[key]);
+        });
+        else if (Object.getOwnPropertyDescriptors) Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+        else ownKeys(source).forEach(function(key) {
+            Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+        });
+    }
+    return target;
+}
+function _defineProperty(obj, key, value) {
+    if (key in obj) Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+    });
+    else obj[key] = value;
+    return obj;
+}
+function autoMergeLevel1(inboundState, originalState, reducedState, _ref) {
+    var debug = _ref.debug;
+    var newState = _objectSpread({
+    }, reducedState); // only rehydrate if inboundState exists and is an object
+    if (inboundState && _typeof(inboundState) === 'object') Object.keys(inboundState).forEach(function(key) {
+        // ignore _persist data
+        if (key === '_persist') return; // if reducer modifies substate, skip auto rehydration
+        if (originalState[key] !== reducedState[key]) {
+            if (debug) console.log('redux-persist/stateReconciler: sub state for key `%s` modified, skipping.', key);
+            return;
+        } // otherwise hard set the new value
+        newState[key] = inboundState[key];
+    });
+    if (debug && inboundState && _typeof(inboundState) === 'object') console.log("redux-persist/stateReconciler: rehydrated keys '".concat(Object.keys(inboundState).join(', '), "'"));
+    return newState;
+}
+exports.default = autoMergeLevel1;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"eBqip"}],"hS8n4":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _constants = require("./constants");
+function createPersistoid(config) {
+    // defaults
+    var blacklist = config.blacklist || null;
+    var whitelist = config.whitelist || null;
+    var transforms = config.transforms || [];
+    var throttle = config.throttle || 0;
+    var storageKey = "".concat(config.keyPrefix !== undefined ? config.keyPrefix : _constants.KEY_PREFIX).concat(config.key);
+    var storage = config.storage;
+    var serialize;
+    if (config.serialize === false) serialize = function serialize1(x) {
+        return x;
+    };
+    else if (typeof config.serialize === 'function') serialize = config.serialize;
+    else serialize = defaultSerialize;
+    var writeFailHandler = config.writeFailHandler || null; // initialize stateful values
+    var lastState = {
+    };
+    var stagedState = {
+    };
+    var keysToProcess = [];
+    var timeIterator = null;
+    var writePromise = null;
+    var update = function update1(state) {
+        // add any changed keys to the queue
+        Object.keys(state).forEach(function(key) {
+            if (!passWhitelistBlacklist(key)) return; // is keyspace ignored? noop
+            if (lastState[key] === state[key]) return; // value unchanged? noop
+            if (keysToProcess.indexOf(key) !== -1) return; // is key already queued? noop
+            keysToProcess.push(key); // add key to queue
+        }); //if any key is missing in the new state which was present in the lastState,
+        //add it for processing too
+        Object.keys(lastState).forEach(function(key) {
+            if (state[key] === undefined && passWhitelistBlacklist(key) && keysToProcess.indexOf(key) === -1 && lastState[key] !== undefined) keysToProcess.push(key);
+        }); // start the time iterator if not running (read: throttle)
+        if (timeIterator === null) timeIterator = setInterval(processNextKey, throttle);
+        lastState = state;
+    };
+    function processNextKey() {
+        if (keysToProcess.length === 0) {
+            if (timeIterator) clearInterval(timeIterator);
+            timeIterator = null;
+            return;
+        }
+        var key = keysToProcess.shift();
+        var endState = transforms.reduce(function(subState, transformer) {
+            return transformer.in(subState, key, lastState);
+        }, lastState[key]);
+        if (endState !== undefined) try {
+            stagedState[key] = serialize(endState);
+        } catch (err) {
+            console.error('redux-persist/createPersistoid: error serializing state', err);
+        }
+        else //if the endState is undefined, no need to persist the existing serialized content
+        delete stagedState[key];
+        if (keysToProcess.length === 0) writeStagedState();
+    }
+    function writeStagedState() {
+        // cleanup any removed keys just before write.
+        Object.keys(stagedState).forEach(function(key) {
+            if (lastState[key] === undefined) delete stagedState[key];
+        });
+        writePromise = storage.setItem(storageKey, serialize(stagedState)).catch(onWriteFail);
+    }
+    function passWhitelistBlacklist(key) {
+        if (whitelist && whitelist.indexOf(key) === -1 && key !== '_persist') return false;
+        if (blacklist && blacklist.indexOf(key) !== -1) return false;
+        return true;
+    }
+    function onWriteFail(err) {
+        // @TODO add fail handlers (typically storage full)
+        if (writeFailHandler) writeFailHandler(err);
+        if (err && true) console.error('Error storing data', err);
+    }
+    var flush = function flush1() {
+        while(keysToProcess.length !== 0)processNextKey();
+        return writePromise || Promise.resolve();
+    }; // return `persistoid`
+    return {
+        update: update,
+        flush: flush
+    };
+} // @NOTE in the future this may be exposed via config
+exports.default = createPersistoid;
+function defaultSerialize(data) {
+    return JSON.stringify(data);
+}
+
+},{"./constants":"fqlAE","@parcel/transformer-js/src/esmodule-helpers.js":"eBqip"}],"3zWrW":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _constants = require("./constants");
+function getStoredState(config) {
+    var transforms = config.transforms || [];
+    var storageKey = "".concat(config.keyPrefix !== undefined ? config.keyPrefix : _constants.KEY_PREFIX).concat(config.key);
+    var storage = config.storage;
+    var debug = config.debug;
+    var deserialize;
+    if (config.deserialize === false) deserialize = function deserialize1(x) {
+        return x;
+    };
+    else if (typeof config.deserialize === 'function') deserialize = config.deserialize;
+    else deserialize = defaultDeserialize;
+    return storage.getItem(storageKey).then(function(serialized) {
+        if (!serialized) return undefined;
+        else try {
+            var state = {
+            };
+            var rawState = deserialize(serialized);
+            Object.keys(rawState).forEach(function(key) {
+                state[key] = transforms.reduceRight(function(subState, transformer) {
+                    return transformer.out(subState, key, rawState);
+                }, deserialize(rawState[key]));
+            });
+            return state;
+        } catch (err) {
+            if (debug) console.log("redux-persist/getStoredState: Error restoring data ".concat(serialized), err);
+            throw err;
+        }
+    });
+}
+exports.default = getStoredState;
+function defaultDeserialize(serial) {
+    return JSON.parse(serial);
+}
+
+},{"./constants":"fqlAE","@parcel/transformer-js/src/esmodule-helpers.js":"eBqip"}],"bdRmU":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _constants = require("./constants");
+function purgeStoredState(config) {
+    var storage = config.storage;
+    var storageKey = "".concat(config.keyPrefix !== undefined ? config.keyPrefix : _constants.KEY_PREFIX).concat(config.key);
+    return storage.removeItem(storageKey, warnIfRemoveError);
+}
+exports.default = purgeStoredState;
+function warnIfRemoveError(err) {
+    if (err && true) console.error('redux-persist/purgeStoredState: Error purging data stored state', err);
+}
+
+},{"./constants":"fqlAE","@parcel/transformer-js/src/esmodule-helpers.js":"eBqip"}],"9Bukj":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _redux = require("redux");
+var _persistReducer = require("./persistReducer");
+var _persistReducerDefault = parcelHelpers.interopDefault(_persistReducer);
+var _autoMergeLevel2 = require("./stateReconciler/autoMergeLevel2");
+var _autoMergeLevel2Default = parcelHelpers.interopDefault(_autoMergeLevel2);
+function persistCombineReducers(config, reducers) {
+    config.stateReconciler = config.stateReconciler === undefined ? _autoMergeLevel2Default.default : config.stateReconciler;
+    return _persistReducerDefault.default(config, _redux.combineReducers(reducers));
+}
+exports.default = persistCombineReducers;
+
+},{"redux":"4d0QS","./persistReducer":"eAow8","./stateReconciler/autoMergeLevel2":"3LLPg","@parcel/transformer-js/src/esmodule-helpers.js":"eBqip"}],"3LLPg":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+function _typeof(obj) {
+    if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") _typeof = function _typeof1(obj1) {
+        return typeof obj1;
+    };
+    else _typeof = function _typeof2(obj1) {
+        return obj1 && typeof Symbol === "function" && obj1.constructor === Symbol && obj1 !== Symbol.prototype ? "symbol" : typeof obj1;
+    };
+    return _typeof(obj);
+}
+function ownKeys(object, enumerableOnly) {
+    var keys = Object.keys(object);
+    if (Object.getOwnPropertySymbols) {
+        var symbols = Object.getOwnPropertySymbols(object);
+        if (enumerableOnly) symbols = symbols.filter(function(sym) {
+            return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+        });
+        keys.push.apply(keys, symbols);
+    }
+    return keys;
+}
+function _objectSpread(target) {
+    for(var i = 1; i < arguments.length; i++){
+        var source = arguments[i] != null ? arguments[i] : {
+        };
+        if (i % 2) ownKeys(source, true).forEach(function(key) {
+            _defineProperty(target, key, source[key]);
+        });
+        else if (Object.getOwnPropertyDescriptors) Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+        else ownKeys(source).forEach(function(key) {
+            Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+        });
+    }
+    return target;
+}
+function _defineProperty(obj, key, value) {
+    if (key in obj) Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+    });
+    else obj[key] = value;
+    return obj;
+}
+function autoMergeLevel2(inboundState, originalState, reducedState, _ref) {
+    var debug = _ref.debug;
+    var newState = _objectSpread({
+    }, reducedState); // only rehydrate if inboundState exists and is an object
+    if (inboundState && _typeof(inboundState) === 'object') Object.keys(inboundState).forEach(function(key) {
+        // ignore _persist data
+        if (key === '_persist') return; // if reducer modifies substate, skip auto rehydration
+        if (originalState[key] !== reducedState[key]) {
+            if (debug) console.log('redux-persist/stateReconciler: sub state for key `%s` modified, skipping.', key);
+            return;
+        }
+        if (isPlainEnoughObject(reducedState[key])) {
+            // if object is plain enough shallow merge the new values (hence "Level2")
+            newState[key] = _objectSpread({
+            }, newState[key], {
+            }, inboundState[key]);
+            return;
+        } // otherwise hard set
+        newState[key] = inboundState[key];
+    });
+    if (debug && inboundState && _typeof(inboundState) === 'object') console.log("redux-persist/stateReconciler: rehydrated keys '".concat(Object.keys(inboundState).join(', '), "'"));
+    return newState;
+}
+exports.default = autoMergeLevel2;
+function isPlainEnoughObject(o) {
+    return o !== null && !Array.isArray(o) && _typeof(o) === 'object';
+}
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"eBqip"}],"fHEPT":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _redux = require("redux");
+var _constants = require("./constants");
+function _toConsumableArray(arr) {
+    return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread();
+}
+function _nonIterableSpread() {
+    throw new TypeError("Invalid attempt to spread non-iterable instance");
+}
+function _iterableToArray(iter) {
+    if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);
+}
+function _arrayWithoutHoles(arr) {
+    if (Array.isArray(arr)) {
+        for(var i = 0, arr2 = new Array(arr.length); i < arr.length; i++)arr2[i] = arr[i];
+        return arr2;
+    }
+}
+function ownKeys(object, enumerableOnly) {
+    var keys = Object.keys(object);
+    if (Object.getOwnPropertySymbols) {
+        var symbols = Object.getOwnPropertySymbols(object);
+        if (enumerableOnly) symbols = symbols.filter(function(sym) {
+            return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+        });
+        keys.push.apply(keys, symbols);
+    }
+    return keys;
+}
+function _objectSpread(target) {
+    for(var i = 1; i < arguments.length; i++){
+        var source = arguments[i] != null ? arguments[i] : {
+        };
+        if (i % 2) ownKeys(source, true).forEach(function(key) {
+            _defineProperty(target, key, source[key]);
+        });
+        else if (Object.getOwnPropertyDescriptors) Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+        else ownKeys(source).forEach(function(key) {
+            Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+        });
+    }
+    return target;
+}
+function _defineProperty(obj, key, value) {
+    if (key in obj) Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+    });
+    else obj[key] = value;
+    return obj;
+}
+var initialState = {
+    registry: [],
+    bootstrapped: false
+};
+var persistorReducer = function persistorReducer1() {
+    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
+    var action = arguments.length > 1 ? arguments[1] : undefined;
+    switch(action.type){
+        case _constants.REGISTER:
+            return _objectSpread({
+            }, state, {
+                registry: [].concat(_toConsumableArray(state.registry), [
+                    action.key
+                ])
+            });
+        case _constants.REHYDRATE:
+            var firstIndex = state.registry.indexOf(action.key);
+            var registry = _toConsumableArray(state.registry);
+            registry.splice(firstIndex, 1);
+            return _objectSpread({
+            }, state, {
+                registry: registry,
+                bootstrapped: registry.length === 0
+            });
+        default:
+            return state;
+    }
+};
+function persistStore(store, options, cb) {
+    var optionsToTest = options || {
+    };
+    var bannedKeys = [
+        'blacklist',
+        'whitelist',
+        'transforms',
+        'storage',
+        'keyPrefix',
+        'migrate'
+    ];
+    bannedKeys.forEach(function(k) {
+        if (!!optionsToTest[k]) console.error("redux-persist: invalid option passed to persistStore: \"".concat(k, "\". You may be incorrectly passing persistConfig into persistStore, whereas it should be passed into persistReducer."));
+    });
+    var boostrappedCb = cb || false;
+    var _pStore = _redux.createStore(persistorReducer, initialState, options && options.enhancer ? options.enhancer : undefined);
+    var register = function register1(key) {
+        _pStore.dispatch({
+            type: _constants.REGISTER,
+            key: key
+        });
+    };
+    var rehydrate = function rehydrate1(key, payload, err) {
+        var rehydrateAction = {
+            type: _constants.REHYDRATE,
+            payload: payload,
+            err: err,
+            key: key // dispatch to `store` to rehydrate and `persistor` to track result
+        };
+        store.dispatch(rehydrateAction);
+        _pStore.dispatch(rehydrateAction);
+        if (boostrappedCb && persistor.getState().bootstrapped) {
+            boostrappedCb();
+            boostrappedCb = false;
+        }
+    };
+    var persistor = _objectSpread({
+    }, _pStore, {
+        purge: function purge() {
+            var results = [];
+            store.dispatch({
+                type: _constants.PURGE,
+                result: function result(purgeResult) {
+                    results.push(purgeResult);
+                }
+            });
+            return Promise.all(results);
+        },
+        flush: function flush() {
+            var results = [];
+            store.dispatch({
+                type: _constants.FLUSH,
+                result: function result(flushResult) {
+                    results.push(flushResult);
+                }
+            });
+            return Promise.all(results);
+        },
+        pause: function pause() {
+            store.dispatch({
+                type: _constants.PAUSE
+            });
+        },
+        persist: function persist() {
+            store.dispatch({
+                type: _constants.PERSIST,
+                register: register,
+                rehydrate: rehydrate
+            });
+        }
+    });
+    if (!(options && options.manualPersist)) persistor.persist();
+    return persistor;
+}
+exports.default = persistStore;
+
+},{"redux":"4d0QS","./constants":"fqlAE","@parcel/transformer-js/src/esmodule-helpers.js":"eBqip"}],"ge1IH":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _constants = require("./constants");
+function createMigrate(migrations, config) {
+    var _ref = config || {
+    }, debug = _ref.debug;
+    return function(state, currentVersion) {
+        if (!state) {
+            if (debug) console.log('redux-persist: no inbound state, skipping migration');
+            return Promise.resolve(undefined);
+        }
+        var inboundVersion = state._persist && state._persist.version !== undefined ? state._persist.version : _constants.DEFAULT_VERSION;
+        if (inboundVersion === currentVersion) {
+            if (debug) console.log('redux-persist: versions match, noop migration');
+            return Promise.resolve(state);
+        }
+        if (inboundVersion > currentVersion) {
+            console.error('redux-persist: downgrading version is not supported');
+            return Promise.resolve(state);
+        }
+        var migrationKeys = Object.keys(migrations).map(function(ver) {
+            return parseInt(ver);
+        }).filter(function(key) {
+            return currentVersion >= key && key > inboundVersion;
+        }).sort(function(a, b) {
+            return a - b;
+        });
+        if (debug) console.log('redux-persist: migrationKeys', migrationKeys);
+        try {
+            var migratedState = migrationKeys.reduce(function(state1, versionKey) {
+                if (debug) console.log('redux-persist: running migration for versionKey', versionKey);
+                return migrations[versionKey](state1);
+            }, state);
+            return Promise.resolve(migratedState);
+        } catch (err) {
+            return Promise.reject(err);
+        }
+    };
+}
+exports.default = createMigrate;
+
+},{"./constants":"fqlAE","@parcel/transformer-js/src/esmodule-helpers.js":"eBqip"}],"cmwf8":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+function createTransform(inbound, outbound) {
+    var config = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {
+    };
+    var whitelist = config.whitelist || null;
+    var blacklist = config.blacklist || null;
+    function whitelistBlacklistCheck(key) {
+        if (whitelist && whitelist.indexOf(key) === -1) return true;
+        if (blacklist && blacklist.indexOf(key) !== -1) return true;
+        return false;
+    }
+    return {
+        in: function _in(state, key, fullState) {
+            return !whitelistBlacklistCheck(key) && inbound ? inbound(state, key, fullState) : state;
+        },
+        out: function out(state, key, fullState) {
+            return !whitelistBlacklistCheck(key) && outbound ? outbound(state, key, fullState) : state;
+        }
+    };
+}
+exports.default = createTransform;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"eBqip"}],"4PpbC":[function(require,module,exports) {
+"use strict";
+exports.__esModule = true;
+exports.default = void 0;
+var _createWebStorage = _interopRequireDefault(require("./createWebStorage"));
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        default: obj
+    };
+}
+var _default = _createWebStorage.default('local');
+exports.default = _default;
+
+},{"./createWebStorage":"6Bkl8"}],"6Bkl8":[function(require,module,exports) {
+"use strict";
+exports.__esModule = true;
+exports.default = createWebStorage;
+var _getStorage = _interopRequireDefault(require("./getStorage"));
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        default: obj
+    };
+}
+function createWebStorage(type) {
+    var storage = _getStorage.default(type);
+    return {
+        getItem: function getItem(key) {
+            return new Promise(function(resolve, reject) {
+                resolve(storage.getItem(key));
+            });
+        },
+        setItem: function setItem(key, item) {
+            return new Promise(function(resolve, reject) {
+                resolve(storage.setItem(key, item));
+            });
+        },
+        removeItem: function removeItem(key) {
+            return new Promise(function(resolve, reject) {
+                resolve(storage.removeItem(key));
+            });
+        }
+    };
+}
+
+},{"./getStorage":"esWow"}],"esWow":[function(require,module,exports) {
+"use strict";
+exports.__esModule = true;
+exports.default = getStorage;
+function _typeof(obj) {
+    if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") _typeof = function _typeof1(obj1) {
+        return typeof obj1;
+    };
+    else _typeof = function _typeof2(obj1) {
+        return obj1 && typeof Symbol === "function" && obj1.constructor === Symbol && obj1 !== Symbol.prototype ? "symbol" : typeof obj1;
+    };
+    return _typeof(obj);
+}
+function noop() {
+}
+var noopStorage = {
+    getItem: noop,
+    setItem: noop,
+    removeItem: noop
+};
+function hasStorage(storageType) {
+    if ((typeof self === "undefined" ? "undefined" : _typeof(self)) !== 'object' || !(storageType in self)) return false;
+    try {
+        var storage = self[storageType];
+        var testKey = "redux-persist ".concat(storageType, " test");
+        storage.setItem(testKey, 'test');
+        storage.getItem(testKey);
+        storage.removeItem(testKey);
+    } catch (e) {
+        console.warn("redux-persist ".concat(storageType, " test failed, persistence will be disabled."));
+        return false;
+    }
+    return true;
+}
+function getStorage(type) {
+    var storageType = "".concat(type, "Storage");
+    if (hasStorage(storageType)) return self[storageType];
+    else {
+        console.error("redux-persist failed to create sync storage. falling back to noop storage.");
+        return noopStorage;
+    }
+}
+
+},{}],"4qJaf":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "PersistGate", ()=>PersistGate1
+);
+var _react = require("react"); // eslint-disable-line import/no-unresolved
+var _reactDefault = parcelHelpers.interopDefault(_react);
+function _typeof(obj) {
+    if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") _typeof = function _typeof1(obj1) {
+        return typeof obj1;
+    };
+    else _typeof = function _typeof2(obj1) {
+        return obj1 && typeof Symbol === "function" && obj1.constructor === Symbol && obj1 !== Symbol.prototype ? "symbol" : typeof obj1;
+    };
+    return _typeof(obj);
+}
+function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) throw new TypeError("Cannot call a class as a function");
+}
+function _defineProperties(target, props) {
+    for(var i = 0; i < props.length; i++){
+        var descriptor = props[i];
+        descriptor.enumerable = descriptor.enumerable || false;
+        descriptor.configurable = true;
+        if ("value" in descriptor) descriptor.writable = true;
+        Object.defineProperty(target, descriptor.key, descriptor);
+    }
+}
+function _createClass(Constructor, protoProps, staticProps) {
+    if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+    if (staticProps) _defineProperties(Constructor, staticProps);
+    return Constructor;
+}
+function _possibleConstructorReturn(self, call) {
+    if (call && (_typeof(call) === "object" || typeof call === "function")) return call;
+    return _assertThisInitialized(self);
+}
+function _getPrototypeOf(o) {
+    _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf1(o1) {
+        return o1.__proto__ || Object.getPrototypeOf(o1);
+    };
+    return _getPrototypeOf(o);
+}
+function _assertThisInitialized(self) {
+    if (self === void 0) throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    return self;
+}
+function _inherits(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) throw new TypeError("Super expression must either be null or a function");
+    subClass.prototype = Object.create(superClass && superClass.prototype, {
+        constructor: {
+            value: subClass,
+            writable: true,
+            configurable: true
+        }
+    });
+    if (superClass) _setPrototypeOf(subClass, superClass);
+}
+function _setPrototypeOf(o, p) {
+    _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf1(o1, p1) {
+        o1.__proto__ = p1;
+        return o1;
+    };
+    return _setPrototypeOf(o, p);
+}
+function _defineProperty(obj, key, value) {
+    if (key in obj) Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+    });
+    else obj[key] = value;
+    return obj;
+}
+var PersistGate1 = /*#__PURE__*/ function(_PureComponent) {
+    _inherits(PersistGate2, _PureComponent);
+    function PersistGate2() {
+        var _getPrototypeOf2;
+        var _this;
+        _classCallCheck(this, PersistGate2);
+        for(var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++)args[_key] = arguments[_key];
+        _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(PersistGate2)).call.apply(_getPrototypeOf2, [
+            this
+        ].concat(args)));
+        _defineProperty(_assertThisInitialized(_this), "state", {
+            bootstrapped: false
+        });
+        _defineProperty(_assertThisInitialized(_this), "_unsubscribe", void 0);
+        _defineProperty(_assertThisInitialized(_this), "handlePersistorState", function() {
+            var persistor = _this.props.persistor;
+            var _persistor$getState = persistor.getState(), bootstrapped = _persistor$getState.bootstrapped;
+            if (bootstrapped) {
+                if (_this.props.onBeforeLift) Promise.resolve(_this.props.onBeforeLift()).finally(function() {
+                    return _this.setState({
+                        bootstrapped: true
+                    });
+                });
+                else _this.setState({
+                    bootstrapped: true
+                });
+                _this._unsubscribe && _this._unsubscribe();
+            }
+        });
+        return _this;
+    }
+    _createClass(PersistGate2, [
+        {
+            key: "componentDidMount",
+            value: function componentDidMount() {
+                this._unsubscribe = this.props.persistor.subscribe(this.handlePersistorState);
+                this.handlePersistorState();
+            }
+        },
+        {
+            key: "componentWillUnmount",
+            value: function componentWillUnmount() {
+                this._unsubscribe && this._unsubscribe();
+            }
+        },
+        {
+            key: "render",
+            value: function render() {
+                if (typeof this.props.children === 'function' && this.props.loading) console.error('redux-persist: PersistGate expects either a function child or loading prop, but not both. The loading prop will be ignored.');
+                if (typeof this.props.children === 'function') return this.props.children(this.state.bootstrapped);
+                return this.state.bootstrapped ? this.props.children : this.props.loading;
+            }
+        }
+    ]);
+    return PersistGate2;
+}(_react.PureComponent);
+_defineProperty(PersistGate1, "defaultProps", {
+    children: null,
+    loading: null
+});
+
+},{"react":"6TuXu","@parcel/transformer-js/src/esmodule-helpers.js":"eBqip"}]},["2Farv","fHDwL","dLPEP"], "dLPEP", "parcelRequireaec4")
 
 //# sourceMappingURL=index.6701a6e1.js.map

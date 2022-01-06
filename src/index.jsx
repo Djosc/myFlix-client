@@ -2,6 +2,12 @@ import React from 'react';
 import ReactDom from 'react-dom';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
+
+// Redux persist lib to maintain state on reload
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+import { PersistGate } from 'redux-persist/integration/react';
+
 import { devToolsEnhancer } from 'redux-devtools-extension';
 import moviesApp from './reducers/reducers';
 
@@ -13,7 +19,17 @@ import NavBar from './components/navbar/navbar';
 import './index.scss';
 
 // Create central store for the entire app to access
-const store = createStore(moviesApp, devToolsEnhancer());
+const persistConfig = {
+	key: 'root',
+	storage,
+};
+
+// const store = createStore(moviesApp, devToolsEnhancer());
+
+const persistedReducer = persistReducer(persistConfig, moviesApp);
+
+let store = createStore(persistedReducer);
+let persistor = persistStore(store);
 
 // Main component
 class MyFlixApplication extends React.Component {
@@ -21,9 +37,11 @@ class MyFlixApplication extends React.Component {
 		return (
 			<>
 				<Provider store={store}>
-					<Container fluid="true">
-						<MainView />
-					</Container>
+					<PersistGate loading={null} persistor={persistor}>
+						<Container fluid="true">
+							<MainView />
+						</Container>
+					</PersistGate>
 				</Provider>
 			</>
 		);

@@ -3,5 +3,17 @@ body {
   font-family: "Work Sans", sans-serif;
 }
 
+.back-button {
+  width: 200px;
+  left: 4rem;
+  bottom: 3rem;
+  position: fixed;
+}
+@media screen and (max-width: 768px) {
+  .back-button {
+    margin: 1rem;
+    position: static;
+  }
+}
 
 /*# sourceMappingURL=index.caa67093.css.map */

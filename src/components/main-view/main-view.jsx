@@ -73,6 +73,8 @@ class MainView extends React.Component {
 					Birthday: response.data.Birthday,
 					FavoriteMovies: response.data.FavoriteMovies,
 				});
+				console.log(response);
+				localStorage.setItem('userData', JSON.stringify(response.data));
 			})
 			.catch((err) => console.log(err));
 	}

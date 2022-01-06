@@ -6,7 +6,11 @@ import moment from 'moment';
 import { connect } from 'react-redux';
 import { setUserData } from '../../actions/actions';
 
-function UserInfo({ movies, userData, userName, email, birthday }) {
+function UserInfo({ movies, userName, email, birthday, userData }) {
+	// Retrieving this from local storage because of redux losing state when refreshing
+	// const userData1 = localStorage.getItem('userData');
+	// const userData2 = JSON.parse(userData1);
+	// console.log(userData1);
 	return (
 		<>
 			<Card>
@@ -21,7 +25,6 @@ function UserInfo({ movies, userData, userName, email, birthday }) {
 				<Card.Body>
 					<Card.Header className="text-center">Favorite Movies</Card.Header>
 					<ListGroup className="text-center">
-						{console.log(userData.FavoriteMovies)}
 						{userData.FavoriteMovies.map((favId, index) => {
 							let movie = movies.find((m) => m._id === favId);
 							return (
