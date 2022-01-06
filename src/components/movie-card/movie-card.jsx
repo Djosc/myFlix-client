@@ -9,14 +9,14 @@ import './movie-card.scss';
 
 class MovieCard extends React.Component {
 	render() {
-		const { movieData } = this.props;
+		const { movie } = this.props;
 
 		return (
 			<Card>
-				<Card.Img variant="top" src={movieData.ImagePath} crossOrigin="anonymous" />
+				<Card.Img variant="top" src={movie.ImagePath} crossOrigin="anonymous" />
 				<Card.Body>
-					<Card.Title>{movieData.Title}</Card.Title>
-					<Link to={`/movies/${movieData._id}`}>
+					<Card.Title>{movie.Title}</Card.Title>
+					<Link to={`/movies/${movie._id}`}>
 						<Button variant="primary" className="mt-3">
 							More Info
 						</Button>
@@ -28,7 +28,7 @@ class MovieCard extends React.Component {
 }
 
 MovieCard.propTypes = {
-	movieData: PropTypes.shape({
+	movie: PropTypes.shape({
 		Title: PropTypes.string.isRequired,
 		Description: PropTypes.string.isRequired,
 		Genre: PropTypes.shape({
