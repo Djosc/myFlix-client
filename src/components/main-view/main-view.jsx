@@ -13,7 +13,7 @@ import NavBar from '../navbar/navbar';
 import GenreView from '../genre-view/genre-view';
 
 import { connect } from 'react-redux';
-import { setMovies } from '../../actions/actions';
+import { setMovies, setUserData } from '../../actions/actions';
 
 import MoviesList from '../movies-list/movies-list';
 
@@ -31,29 +31,50 @@ class MainView extends React.Component {
 	}
 
 	componentDidMount() {
-		let accessToken = localStorage.getItem('token');
-		if (accessToken !== null) {
+		let authToken = localStorage.getItem('token');
+		if (authToken !== null) {
 			this.setState({
 				user: localStorage.getItem('user'),
 			});
-			this.getMovies(accessToken);
+			this.getMovies(authToken);
+			this.getUserData(authToken);
 		}
 	}
 
+	/**
+	 * Making movie data and user data axios calls from the main-view(upper-level component)
+	 * then passing down as props to other views.
+	 */
 	getMovies(token) {
 		axios
 			.get('https://david-caldwell-myflix.herokuapp.com/movies', {
 				headers: { Authorization: `Bearer ${token}` },
 			})
 			.then((response) => {
-				// this.setState({
-				// 	movies: response.data,
-				// });
 				this.props.setMovies(response.data);
 			})
 			.catch((error) => {
 				console.log(error);
 			});
+	}
+
+	getUserData(token) {
+		const username = localStorage.getItem('user');
+		// const username = this.state.user;
+		axios
+			.get(`https://david-caldwell-myflix.herokuapp.com/users/${username}`, {
+				headers: { Authorization: `Bearer ${token}` },
+			})
+			.then((response) => {
+				this.props.setUserData({
+					Username: response.data.Username,
+					Password: response.data.Password,
+					Email: response.data.Email,
+					Birthday: response.data.Birthday,
+					FavoriteMovies: response.data.FavoriteMovies,
+				});
+			})
+			.catch((err) => console.log(err));
 	}
 
 	onLoggedOut() {
@@ -97,14 +118,15 @@ class MainView extends React.Component {
 	}
 
 	render() {
-		let { movies } = this.props;
+		let { movies, userData } = this.props;
 		let { user } = this.state;
+		console.log(userData);
 
 		return (
 			<Router>
 				<NavBar user={user} />
-				<Container className="main-view ">
-					<Row className="main-view justify-content-center mt-4 pt-2">
+				<Container style={{ maxWidth: '95%' }}>
+					<Row className="main-view justify-content-md-center mt-4 pt-2">
 						<Route
 							exact
 							path="/"
@@ -113,11 +135,7 @@ class MainView extends React.Component {
 									return <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />;
 								}
 								if (movies.length === 0) return <div className="main-view" />;
-								return (
-									<Col lg={10} md={10} sm={12}>
-										<MoviesList movies={movies} />
-									</Col>
-								);
+								return <MoviesList movies={movies} />;
 							}}
 						/>
 						<Route
@@ -142,8 +160,10 @@ class MainView extends React.Component {
 								return (
 									<Col lg={10} md={10} sm={12}>
 										<MovieView
-											movieData={movies.find((m) => m._id === match.params.movieId)}
+											movie={movies.find((m) => m._id === match.params.movieId)}
 											onBackClick={() => history.goBack()}
+											user={user}
+											userData={userData}
 										/>
 									</Col>
 								);
@@ -197,8 +217,8 @@ class MainView extends React.Component {
 								if (movies.length === 0) return <div className="main-view"></div>;
 								return (
 									<ProfileView
-										history={history}
 										movies={movies}
+										userData={userData}
 										user={user === match.params.userame}
 										onLoggedOut={() => this.onLoggedOut()}
 										onBackClick={() => history.goBack()}
@@ -215,7 +235,7 @@ class MainView extends React.Component {
 }
 
 let mapStateToProps = (state) => {
-	return { movies: state.movies };
+	return { movies: state.movies, userData: state.userData };
 };
 
-export default connect(mapStateToProps, { setMovies })(MainView);
+export default connect(mapStateToProps, { setMovies, setUserData })(MainView);

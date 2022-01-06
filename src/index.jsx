@@ -12,6 +12,7 @@ import NavBar from './components/navbar/navbar';
 // Import statement to indicate that you need to bundle `./index.scss`
 import './index.scss';
 
+// Create central store for the entire app to access
 const store = createStore(moviesApp, devToolsEnhancer());
 
 // Main component

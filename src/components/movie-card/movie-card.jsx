@@ -12,9 +12,14 @@ class MovieCard extends React.Component {
 		const { movie } = this.props;
 
 		return (
-			<Card>
-				<Card.Img variant="top" src={movie.ImagePath} crossOrigin="anonymous" />
-				<Card.Body>
+			<Card className="mb-4">
+				<Card.Img
+					style={{ height: '500px' }}
+					variant="top"
+					src={movie.ImagePath}
+					crossOrigin="anonymous"
+				/>
+				<Card.Body className="text-center">
 					<Card.Title>{movie.Title}</Card.Title>
 					<Link to={`/movies/${movie._id}`}>
 						<Button variant="primary" className="mt-3">

@@ -70,7 +70,7 @@ export function RegistrationView(props) {
 
 	return (
 		<Container>
-			<Row className="justify-content-center" style={{ marginTop: '15%' }}>
+			<Row className="justify-content-center" style={{ marginTop: '10%' }}>
 				<Col lg={6} md={8} className="text-center">
 					<Card>
 						<Card.Body className="text-center py-4">

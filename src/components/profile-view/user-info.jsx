@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Container, Col, Row, Card, ListGroup } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 
-function UserInfo({ movies, userName, email, birthday, favoriteMovies }) {
+import { connect } from 'react-redux';
+import { setUserData } from '../../actions/actions';
+
+function UserInfo({ movies, userData, userName, email, birthday }) {
 	return (
 		<>
 			<Card>
@@ -18,13 +21,13 @@ function UserInfo({ movies, userName, email, birthday, favoriteMovies }) {
 				<Card.Body>
 					<Card.Header className="text-center">Favorite Movies</Card.Header>
 					<ListGroup className="text-center">
-						{favoriteMovies.map((favId) => {
+						{console.log(userData.FavoriteMovies)}
+						{userData.FavoriteMovies.map((favId, index) => {
 							let movie = movies.find((m) => m._id === favId);
-							console.log(movie);
 							return (
 								<Link to={`/movies/${favId}`}>
 									{' '}
-									<ListGroup.Item key={favId}>{movie.Title}</ListGroup.Item>{' '}
+									<ListGroup.Item key={index}>{movie.Title}</ListGroup.Item>{' '}
 								</Link>
 							);
 						})}
@@ -35,4 +38,9 @@ function UserInfo({ movies, userName, email, birthday, favoriteMovies }) {
 	);
 }
 
-export default UserInfo;
+let matchStateToProps = (state) => {
+	const { userData } = state;
+	return { userData };
+};
+
+export default connect(matchStateToProps, { setUserData })(UserInfo);
