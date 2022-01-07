@@ -4,8 +4,17 @@
 
 # Built with Parcel and Deployed on [Netlify](https://myflix-davidcaldwell.netlify.app/)
 
+**API documentation can be found here: https://david-caldwell-myflix.herokuapp.com/documentation**
+
+**User Features**
+- Users can register and login with JWT authentication
+- Users can browse and read about a selection of classic movies
+- Users can add and remove movies to and from their personal list of favorites
+- Users can deregister
+
 **Technologies Used:**
 - React.js
 - Redux
 - React Router
+- React Bootstrap
 - Axios
