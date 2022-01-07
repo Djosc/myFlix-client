@@ -4,8 +4,6 @@ import axios from 'axios';
 import { Container, Form, Button, Row, Col, FloatingLabel, Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
-import './login-view.scss';
-
 export function LoginView(props) {
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
@@ -58,7 +56,7 @@ export function LoginView(props) {
 	return (
 		<Container>
 			<div className="login-form">
-				<Row className="justify-content-center" style={{ marginTop: '20%' }}>
+				<Row className="justify-content-center" style={{ marginTop: '10%' }}>
 					<Col lg={6} md={8} className="text-center">
 						<Card>
 							<Card.Body className="text-center">

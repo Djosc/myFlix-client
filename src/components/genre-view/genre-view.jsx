@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Button } from 'react-bootstrap';
 
 class GenreView extends React.Component {
@@ -19,3 +20,8 @@ class GenreView extends React.Component {
 }
 
 export default GenreView;
+
+GenreView.propTypes = {
+	genre: PropTypes.string,
+	onBackClick: PropTypes.func,
+};

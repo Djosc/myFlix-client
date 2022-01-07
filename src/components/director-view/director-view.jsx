@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Row, Col, Button, Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
@@ -35,3 +36,8 @@ class DirectorView extends React.Component {
 }
 
 export default DirectorView;
+
+DirectorView.propTypes = {
+	director: PropTypes.string,
+	onBackClick: PropTypes.func,
+};

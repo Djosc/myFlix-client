@@ -10,76 +10,53 @@ import {
 	FloatingLabel,
 	Form,
 } from 'react-bootstrap';
+import PropTypes from 'prop-types';
+
+import { connect } from 'react-redux';
+import { setUserData } from '../../actions/actions';
 import { useState } from 'react';
 
 import UserInfo from './user-info';
-// import UserUpdateForm from './user-update-form';
 
-class ProfileView extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			Username: null,
-			Password: null,
-			Email: null,
-			Birthday: null,
-			FavoriteMovies: [],
-			usernameErr: '',
-			passwordErr: '',
-			emailErr: '',
-		};
-	}
+import './profile-view.scss';
 
-	componentDidMount() {
-		const authToken = localStorage.getItem('token');
-		this.getUser(authToken);
-	}
+function ProfileView({ movies, onBackClick, user, userData }) {
+	const [username, setUsername] = useState('');
+	const [password, setPassword] = useState('');
+	const [email, setEmail] = useState('');
+	const [birthday, setBirthday] = useState('');
 
-	getUser(token) {
-		const username = localStorage.getItem('user');
-		axios
-			.get(`https://david-caldwell-myflix.herokuapp.com/users/${username}`, {
-				headers: { Authorization: `Bearer ${token}` },
-			})
-			.then((response) => {
-				this.setState({
-					Username: response.data.Username,
-					Password: response.data.Password,
-					Email: response.data.Email,
-					Birthday: response.data.Birthday,
-					FavoriteMovies: response.data.FavoriteMovies,
-				});
-			})
-			.catch((err) => console.log(err));
-	}
+	const [usernameErr, setUsernameErr] = useState('');
+	const [passwordErr, setPasswordErr] = useState('');
+	const [emailErr, setEmailErr] = useState('');
 
-	updateUser = (e) => {
-		e.preventDefault();
-		const username = localStorage.getItem('user');
+	const updateUser = () => {
+		const user = localStorage.getItem('user');
 		const authToken = localStorage.getItem('token');
 
-		let isReq = this.validate();
+		let isReq = validate();
 		if (isReq) {
 			axios
 				.put(
-					`https://david-caldwell-myflix.herokuapp.com/users/${username}`,
+					`https://david-caldwell-myflix.herokuapp.com/users/${user}`,
 					{
-						Username: this.state.Username,
-						Password: this.state.Password,
-						Email: this.state.Email,
-						Birthday: this.state.Birthday,
+						Username: username,
+						Password: password,
+						Email: email,
+						Birthday: birthday,
 					},
 					{ headers: { Authorization: `Bearer ${authToken}` } }
 				)
 				.then((response) => {
-					this.setState({
+					setUserData({
 						Username: response.data.Username,
 						Password: response.data.Password,
 						Email: response.data.Email,
 						Birthday: response.data.Birthday,
 					});
+					console.log(response.data);
 
-					localStorage.setItem('user', this.state.Username);
+					localStorage.setItem('user', response.data.Username);
 					alert('Profile has been updated');
 					window.location.reload();
 				})
@@ -87,13 +64,12 @@ class ProfileView extends React.Component {
 		}
 	};
 
-	deleteUser = (e) => {
-		e.preventDefault();
-		const username = localStorage.getItem('user');
+	const deleteUser = () => {
+		const user = localStorage.getItem('user');
 		const authToken = localStorage.getItem('token');
 
 		axios
-			.delete(`https://david-caldwell-myflix.herokuapp.com/users/${username}`, {
+			.delete(`https://david-caldwell-myflix.herokuapp.com/users/${user}`, {
 				headers: { Authorization: `Bearer ${authToken}` },
 			})
 			.then((response) => {
@@ -105,67 +81,40 @@ class ProfileView extends React.Component {
 			});
 	};
 
-	validate = () => {
+	const validate = () => {
 		let isReq = true;
-		if (this.state.Username.length < 4) {
-			this.setUsernameErr('Username must be at least 4 characters long');
-			isReq = false;
-		}
-		if (this.state.Password.length < 8) {
-			this.setPasswordErr('Password must be at least 8 characters long');
-			isReq = false;
-		}
-		if (this.state.Email.indexOf('@') === -1) {
-			this.setEmailErr('Enter Valid Email Address');
+		if (username.length < 4) {
+			setUsernameErr('Username must be at least 4 characters long');
 			isReq = false;
 		}
 
+		if (password.length < 8) {
+			setPasswordErr('Password must be at least 8 characters long');
+			isReq = false;
+		}
+
+		if (email.indexOf('@') === -1) {
+			setEmailErr('Enter Valid Email Address');
+			isReq = false;
+		}
 		return isReq;
 	};
 
-	setUsername(value) {
-		this.state.Username = value;
-	}
-
-	setPassword(value) {
-		this.state.Password = value;
-	}
-
-	setEmail(value) {
-		this.state.Email = value;
-	}
-
-	setBirthday(value) {
-		this.state.Birthday = value;
-	}
-
-	setusernameErr(value) {
-		this.state.usernameErr = value;
-	}
-
-	setpasswordErr(value) {
-		this.state.passwordErr = value;
-	}
-
-	setemailErr(value) {
-		this.state.emailErr = value;
-	}
-
-	render() {
-		const { onBackClick, movies, onLoggedOut } = this.props;
-		return (
-			<Row>
-				<Col>
+	return (
+		<>
+			<Row className="justify-content-center">
+				<Col md={6} sm={10} className="">
 					<UserInfo
-						userName={this.state.Username}
-						passWord={this.state.Password}
-						email={this.state.Email}
-						birthday={this.state.Birthday}
-						favoriteMovies={this.state.FavoriteMovies}
+						userName={userData.Username}
+						passWord={userData.Password}
+						email={userData.Email}
+						birthday={userData.Birthday}
+						favoriteMovies={userData.FavoriteMovies}
 						movies={movies}
 					/>
 				</Col>
-				<Col>
+
+				<Col md={6} sm={10}>
 					<Card>
 						<Card.Body className="text-center py-4">
 							<Card.Title as="h2">Update Account Details</Card.Title>
@@ -176,10 +125,13 @@ class ProfileView extends React.Component {
 							>
 								<Form.Control
 									type="text"
-									onChange={(e) => this.setUsername(e.target.value)}
+									onChange={(e) => setUsername(e.target.value)}
 									placeholder="Username Example"
 								/>
 							</FloatingLabel>
+							{usernameErr && (
+								<h6 style={{ color: 'red', marginBottom: '20px' }}>{usernameErr}</h6>
+							)}
 							<FloatingLabel
 								className="mx-4 my-4"
 								controlId="passwordInput"
@@ -187,17 +139,23 @@ class ProfileView extends React.Component {
 							>
 								<Form.Control
 									type="text"
-									onChange={(e) => this.setPassword(e.target.value)}
+									onChange={(e) => setPassword(e.target.value)}
 									placeholder="Password Example"
 								/>
 							</FloatingLabel>
+							{passwordErr && (
+								<h6 style={{ color: 'red', marginBottom: '20px' }}>{passwordErr}</h6>
+							)}
 							<FloatingLabel className="mx-4 my-4" controlId="emailInput" label="Email">
 								<Form.Control
 									type="text"
-									onChange={(e) => this.setEmail(e.target.value)}
+									onChange={(e) => setEmail(e.target.value)}
 									placeholder="email Example"
 								/>
 							</FloatingLabel>
+							{emailErr && (
+								<h6 style={{ color: 'red', marginBottom: '20px' }}>{emailErr}</h6>
+							)}
 							<FloatingLabel
 								className="mx-4 my-4"
 								controlId="birthdayInput"
@@ -205,7 +163,7 @@ class ProfileView extends React.Component {
 							>
 								<Form.Control
 									type="text"
-									onChange={(e) => this.setBirthday(e.target.value)}
+									onChange={(e) => setBirthday(e.target.value)}
 									placeholder="Birthday Example"
 								/>
 							</FloatingLabel>
@@ -214,7 +172,7 @@ class ProfileView extends React.Component {
 								size="lg"
 								variant="primary"
 								type="submit"
-								onClick={this.updateUser}
+								onClick={updateUser}
 							>
 								Update
 							</Button>
@@ -223,19 +181,37 @@ class ProfileView extends React.Component {
 								size="lg"
 								variant="danger"
 								type="submit"
-								onClick={this.deleteUser}
+								onClick={deleteUser}
 							>
 								Delete Account
 							</Button>
 						</Card.Body>
 					</Card>
 				</Col>
-				<Button className="" variant="primary" size="lg" onClick={onBackClick}>
+				<Button
+					className="back-button"
+					variant="primary"
+					size="lg"
+					onClick={() => onBackClick()}
+				>
 					Back
 				</Button>
 			</Row>
-		);
-	}
+		</>
+	);
 }
 
-export default ProfileView;
+let matchStateToProps = (state) => {
+	const { userData } = state;
+	return { userData };
+};
+
+export default connect(matchStateToProps, { setUserData })(ProfileView);
+
+ProfileView.propTypes = {
+	movies: PropTypes.array,
+	onBackClick: PropTypes.func,
+	user: PropTypes.bool,
+	userData: PropTypes.object,
+	setUserData: PropTypes.func,
+};

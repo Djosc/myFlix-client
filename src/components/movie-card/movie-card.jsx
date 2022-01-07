@@ -9,26 +9,31 @@ import './movie-card.scss';
 
 class MovieCard extends React.Component {
 	render() {
-		const { movieData } = this.props;
+		const { movie } = this.props;
 
 		return (
-			<Card>
-				<Card.Img variant="top" src={movieData.ImagePath} crossOrigin="anonymous" />
-				<Card.Body>
-					<Card.Title>{movieData.Title}</Card.Title>
-					<Link to={`/movies/${movieData._id}`}>
+			<Link to={`/movies/${movie._id}`}>
+				<Card className="movie-card mb-4">
+					<Card.Img
+						style={{ height: '500px' }}
+						variant="top"
+						src={movie.ImagePath}
+						crossOrigin="anonymous"
+					/>
+					<Card.Body className="text-center">
+						<Card.Title>{movie.Title}</Card.Title>
 						<Button variant="primary" className="mt-3">
 							More Info
 						</Button>
-					</Link>
-				</Card.Body>
-			</Card>
+					</Card.Body>
+				</Card>
+			</Link>
 		);
 	}
 }
 
 MovieCard.propTypes = {
-	movieData: PropTypes.shape({
+	movie: PropTypes.shape({
 		Title: PropTypes.string.isRequired,
 		Description: PropTypes.string.isRequired,
 		Genre: PropTypes.shape({
