@@ -25,7 +25,6 @@ function MovieView({ movie, user, userData, onBackClick }) {
 				}
 			)
 			.then((response) => {
-				// alert('Movie Added to Favorites');
 				setFavorited(!favorited);
 				setUserData({
 					FavoriteMovies: response.data.FavoriteMovies,
@@ -47,7 +46,6 @@ function MovieView({ movie, user, userData, onBackClick }) {
 				}
 			)
 			.then((response) => {
-				// alert('Movie Removed from Favorites');
 				setFavorited(!favorited);
 				setUserData({
 					FavoriteMovies: response.data.FavoriteMovies,
@@ -139,8 +137,8 @@ MovieView.propTypes = {
 		ImagePath: PropTypes.string, //Maybe need to make this required
 		Featured: PropTypes.bool.isRequired,
 	}).isRequired,
-	// user: PropTypes.bool.isRequired,
 	onBackClick: PropTypes.func.isRequired,
+	setUserData: PropTypes.func,
 };
 
 let mapStateToProps = (state) => {

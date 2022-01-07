@@ -10,6 +10,7 @@ import {
 	FloatingLabel,
 	Form,
 } from 'react-bootstrap';
+import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
 import { setUserData } from '../../actions/actions';
@@ -24,6 +25,7 @@ function ProfileView({ movies, onBackClick, user, userData }) {
 	const [password, setPassword] = useState('');
 	const [email, setEmail] = useState('');
 	const [birthday, setBirthday] = useState('');
+
 	const [usernameErr, setUsernameErr] = useState('');
 	const [passwordErr, setPasswordErr] = useState('');
 	const [emailErr, setEmailErr] = useState('');
@@ -38,10 +40,6 @@ function ProfileView({ movies, onBackClick, user, userData }) {
 				.put(
 					`https://david-caldwell-myflix.herokuapp.com/users/${user}`,
 					{
-						// Username: userData.Username,
-						// Password: userData.Password,
-						// Email: userData.Email,
-						// Birthday: userData.Birthday,
 						Username: username,
 						Password: password,
 						Email: email,
@@ -56,6 +54,7 @@ function ProfileView({ movies, onBackClick, user, userData }) {
 						Email: response.data.Email,
 						Birthday: response.data.Birthday,
 					});
+					console.log(response.data);
 
 					localStorage.setItem('user', response.data.Username);
 					alert('Profile has been updated');
@@ -84,19 +83,20 @@ function ProfileView({ movies, onBackClick, user, userData }) {
 
 	const validate = () => {
 		let isReq = true;
-		if (userData.Username.length < 4) {
+		if (username.length < 4) {
 			setUsernameErr('Username must be at least 4 characters long');
 			isReq = false;
 		}
-		if (userData.Password.length < 8) {
+
+		if (password.length < 8) {
 			setPasswordErr('Password must be at least 8 characters long');
 			isReq = false;
 		}
-		if (userData.Email.indexOf('@') === -1) {
+
+		if (email.indexOf('@') === -1) {
 			setEmailErr('Enter Valid Email Address');
 			isReq = false;
 		}
-
 		return isReq;
 	};
 
@@ -129,6 +129,9 @@ function ProfileView({ movies, onBackClick, user, userData }) {
 									placeholder="Username Example"
 								/>
 							</FloatingLabel>
+							{usernameErr && (
+								<h6 style={{ color: 'red', marginBottom: '20px' }}>{usernameErr}</h6>
+							)}
 							<FloatingLabel
 								className="mx-4 my-4"
 								controlId="passwordInput"
@@ -140,6 +143,9 @@ function ProfileView({ movies, onBackClick, user, userData }) {
 									placeholder="Password Example"
 								/>
 							</FloatingLabel>
+							{passwordErr && (
+								<h6 style={{ color: 'red', marginBottom: '20px' }}>{passwordErr}</h6>
+							)}
 							<FloatingLabel className="mx-4 my-4" controlId="emailInput" label="Email">
 								<Form.Control
 									type="text"
@@ -147,6 +153,9 @@ function ProfileView({ movies, onBackClick, user, userData }) {
 									placeholder="email Example"
 								/>
 							</FloatingLabel>
+							{emailErr && (
+								<h6 style={{ color: 'red', marginBottom: '20px' }}>{emailErr}</h6>
+							)}
 							<FloatingLabel
 								className="mx-4 my-4"
 								controlId="birthdayInput"
@@ -198,3 +207,11 @@ let matchStateToProps = (state) => {
 };
 
 export default connect(matchStateToProps, { setUserData })(ProfileView);
+
+ProfileView.propTypes = {
+	movies: PropTypes.array,
+	onBackClick: PropTypes.func,
+	user: PropTypes.string,
+	userData: PropTypes.array,
+	setUserData: PropTypes.func,
+};

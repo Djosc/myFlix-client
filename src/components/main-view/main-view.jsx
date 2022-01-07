@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import { PropTypes } from 'prop-types';
 
 import { BrowserRouter as Router, Redirect, Route } from 'react-router-dom';
 import { Button, Row, Col, Navbar, Container } from 'react-bootstrap';
@@ -22,8 +23,6 @@ class MainView extends React.Component {
 		super();
 		// Initial state is set to null
 		this.state = {
-			// movies: [],
-			// selectedMovie: null,
 			user: null,
 			registered: true,
 			existingUser: false,
@@ -73,7 +72,6 @@ class MainView extends React.Component {
 					Birthday: response.data.Birthday,
 					FavoriteMovies: response.data.FavoriteMovies,
 				});
-				console.log(response);
 				localStorage.setItem('userData', JSON.stringify(response.data));
 			})
 			.catch((err) => console.log(err));
@@ -110,7 +108,6 @@ class MainView extends React.Component {
 		localStorage.setItem('token', authData.token);
 		localStorage.setItem('user', authData.user.Username);
 		this.getMovies(authData.token);
-		// this.getUser(authData.token);
 	}
 
 	onRegister(registered) {
@@ -122,7 +119,6 @@ class MainView extends React.Component {
 	render() {
 		let { movies, userData } = this.props;
 		let { user } = this.state;
-		console.log(userData);
 
 		return (
 			<Router>
@@ -228,7 +224,6 @@ class MainView extends React.Component {
 								);
 							}}
 						/>
-						{/* <Route exact path="" render={<ProfileView />} />  */}
 					</Row>
 				</Container>
 			</Router>
@@ -241,3 +236,10 @@ let mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps, { setMovies, setUserData })(MainView);
+
+MainView.propTypes = {
+	movies: PropTypes.array,
+	userData: PropTypes.any,
+	setMovies: PropTypes.func,
+	setUserData: PropTypes.func,
+};

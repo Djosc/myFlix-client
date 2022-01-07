@@ -7,10 +7,6 @@ import { connect } from 'react-redux';
 import { setUserData } from '../../actions/actions';
 
 function UserInfo({ movies, userName, email, birthday, userData }) {
-	// Retrieving this from local storage because of redux losing state when refreshing
-	// const userData1 = localStorage.getItem('userData');
-	// const userData2 = JSON.parse(userData1);
-	// console.log(userData1);
 	return (
 		<>
 			<Card>
@@ -28,7 +24,7 @@ function UserInfo({ movies, userName, email, birthday, userData }) {
 						{userData.FavoriteMovies.map((favId, index) => {
 							let movie = movies.find((m) => m._id === favId);
 							return (
-								<Link to={`/movies/${favId}`}>
+								<Link key={index} to={`/movies/${favId}`}>
 									{' '}
 									<ListGroup.Item key={index}>{movie.Title}</ListGroup.Item>{' '}
 								</Link>

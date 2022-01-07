@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { Col } from 'react-bootstrap';
 import { connect } from 'react-redux';
 
+import { Link } from 'react-router-dom';
+
 import MovieCard from '../movie-card/movie-card';
 import VisibilityFilterInput from '../visibility-filter-input/visibility-filter-input';
 
@@ -15,15 +17,11 @@ function MoviesList(props) {
 	const { movies, visibilityFilter } = props;
 	let filteredMovies = movies;
 
-	console.log(filteredMovies);
-
 	if (visibilityFilter !== '') {
 		filteredMovies = movies.filter((m) =>
 			m.Title.toLowerCase().includes(visibilityFilter.toLowerCase())
 		);
 	}
-
-	console.log(filteredMovies);
 
 	if (!movies) return <div className="main-view" />;
 
@@ -41,8 +39,9 @@ function MoviesList(props) {
 	);
 }
 
-// MoviesList.propTypes = {
-
-// }
+MoviesList.propTypes = {
+	movies: PropTypes.array,
+	visibilityFilter: PropTypes.string,
+};
 
 export default connect(mapStateToProps)(MoviesList);
