@@ -1,35 +1,35 @@
 {
-  "name": "myflix-client",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Djosc/myFlix-client.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Djosc/myFlix-client/issues"
-  },
-  "homepage": "https://github.com/Djosc/myFlix-client#readme",
-  "dependencies": {
-    "axios": "^0.24.0",
-    "moment": "^2.29.1",
-    "prop-types": "^15.7.2",
-    "react": "^17.0.2",
-    "react-bootstrap": "^2.0.4",
-    "react-dom": "^17.0.2",
-    "react-redux": "^7.2.6",
-    "react-router-dom": "^5.2.0",
-    "redux": "^4.1.2",
-    "redux-devtools-extension": "^2.13.9",
-    "redux-persist": "^6.0.0"
-  },
-  "devDependencies": {
-    "@parcel/transformer-sass": "^2.0.0-rc.0"
-  }
+	"name": "myflix-client",
+	"version": "1.0.0",
+	"description": "",
+	"default": "src/index.html",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Djosc/myFlix-client.git"
+	},
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/Djosc/myFlix-client/issues"
+	},
+	"homepage": "https://github.com/Djosc/myFlix-client#readme",
+	"dependencies": {
+		"axios": "^0.24.0",
+		"moment": "^2.29.1",
+		"prop-types": "^15.7.2",
+		"react": "^17.0.2",
+		"react-bootstrap": "^2.0.4",
+		"react-dom": "^17.0.2",
+		"react-redux": "^7.2.6",
+		"react-router-dom": "^5.2.0",
+		"redux": "^4.1.2",
+		"redux-devtools-extension": "^2.13.9",
+		"redux-persist": "^6.0.0"
+	},
+	"devDependencies": {
+		"@parcel/transformer-sass": "^2.0.0-rc.0"
+	}
 }
