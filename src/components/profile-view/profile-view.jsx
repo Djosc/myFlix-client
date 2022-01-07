@@ -211,7 +211,7 @@ export default connect(matchStateToProps, { setUserData })(ProfileView);
 ProfileView.propTypes = {
 	movies: PropTypes.array,
 	onBackClick: PropTypes.func,
-	user: PropTypes.string,
-	userData: PropTypes.array,
+	user: PropTypes.bool,
+	userData: PropTypes.object,
 	setUserData: PropTypes.func,
 };

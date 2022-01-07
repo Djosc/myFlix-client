@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Container, Col, Row, Card, ListGroup } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
+import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
 import { setUserData } from '../../actions/actions';
@@ -43,3 +44,11 @@ let matchStateToProps = (state) => {
 };
 
 export default connect(matchStateToProps, { setUserData })(UserInfo);
+
+UserInfo.propTypes = {
+	movies: PropTypes.array,
+	userName: PropTypes.string,
+	email: PropTypes.string,
+	birthday: PropTypes.string,
+	userData: PropTypes.object,
+};

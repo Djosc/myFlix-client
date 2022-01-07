@@ -42240,8 +42240,8 @@ exports.default = _reactRedux.connect(matchStateToProps, {
 ProfileView.propTypes = {
     movies: _propTypesDefault.default.array,
     onBackClick: _propTypesDefault.default.func,
-    user: _propTypesDefault.default.string,
-    userData: _propTypesDefault.default.array,
+    user: _propTypesDefault.default.bool,
+    userData: _propTypesDefault.default.object,
     setUserData: _propTypesDefault.default.func
 };
 var _c;
@@ -42268,6 +42268,8 @@ var _reactBootstrap = require("react-bootstrap");
 var _reactRouterDom = require("react-router-dom");
 var _moment = require("moment");
 var _momentDefault = parcelHelpers.interopDefault(_moment);
+var _propTypes = require("prop-types");
+var _propTypesDefault = parcelHelpers.interopDefault(_propTypes);
 var _reactRedux = require("react-redux");
 var _actions = require("../../actions/actions");
 function UserInfo({ movies , userName , email , birthday , userData  }) {
@@ -42276,13 +42278,13 @@ function UserInfo({ movies , userName , email , birthday , userData  }) {
             /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Card, {
                 __source: {
                     fileName: "src/components/profile-view/user-info.jsx",
-                    lineNumber: 12
+                    lineNumber: 13
                 },
                 __self: this,
                 children: /*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Card.Body, {
                     __source: {
                         fileName: "src/components/profile-view/user-info.jsx",
-                        lineNumber: 13
+                        lineNumber: 14
                     },
                     __self: this,
                     children: [
@@ -42290,7 +42292,7 @@ function UserInfo({ movies , userName , email , birthday , userData  }) {
                             className: "text-center",
                             __source: {
                                 fileName: "src/components/profile-view/user-info.jsx",
-                                lineNumber: 14
+                                lineNumber: 15
                             },
                             __self: this,
                             children: "Account Details"
@@ -42298,7 +42300,7 @@ function UserInfo({ movies , userName , email , birthday , userData  }) {
                         /*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Card.Text, {
                             __source: {
                                 fileName: "src/components/profile-view/user-info.jsx",
-                                lineNumber: 15
+                                lineNumber: 16
                             },
                             __self: this,
                             children: [
@@ -42309,7 +42311,7 @@ function UserInfo({ movies , userName , email , birthday , userData  }) {
                         /*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Card.Text, {
                             __source: {
                                 fileName: "src/components/profile-view/user-info.jsx",
-                                lineNumber: 16
+                                lineNumber: 17
                             },
                             __self: this,
                             children: [
@@ -42320,7 +42322,7 @@ function UserInfo({ movies , userName , email , birthday , userData  }) {
                         /*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Card.Text, {
                             __source: {
                                 fileName: "src/components/profile-view/user-info.jsx",
-                                lineNumber: 17
+                                lineNumber: 18
                             },
                             __self: this,
                             children: [
@@ -42334,13 +42336,13 @@ function UserInfo({ movies , userName , email , birthday , userData  }) {
             /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Card, {
                 __source: {
                     fileName: "src/components/profile-view/user-info.jsx",
-                    lineNumber: 20
+                    lineNumber: 21
                 },
                 __self: this,
                 children: /*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Card.Body, {
                     __source: {
                         fileName: "src/components/profile-view/user-info.jsx",
-                        lineNumber: 21
+                        lineNumber: 22
                     },
                     __self: this,
                     children: [
@@ -42348,7 +42350,7 @@ function UserInfo({ movies , userName , email , birthday , userData  }) {
                             className: "text-center",
                             __source: {
                                 fileName: "src/components/profile-view/user-info.jsx",
-                                lineNumber: 22
+                                lineNumber: 23
                             },
                             __self: this,
                             children: "Favorite Movies"
@@ -42357,7 +42359,7 @@ function UserInfo({ movies , userName , email , birthday , userData  }) {
                             className: "text-center",
                             __source: {
                                 fileName: "src/components/profile-view/user-info.jsx",
-                                lineNumber: 23
+                                lineNumber: 24
                             },
                             __self: this,
                             children: userData.FavoriteMovies.map((favId, index)=>{
@@ -42367,7 +42369,7 @@ function UserInfo({ movies , userName , email , birthday , userData  }) {
                                     to: `/movies/${favId}`,
                                     __source: {
                                         fileName: "src/components/profile-view/user-info.jsx",
-                                        lineNumber: 27
+                                        lineNumber: 28
                                     },
                                     __self: this,
                                     children: [
@@ -42375,7 +42377,7 @@ function UserInfo({ movies , userName , email , birthday , userData  }) {
                                         /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.ListGroup.Item, {
                                             __source: {
                                                 fileName: "src/components/profile-view/user-info.jsx",
-                                                lineNumber: 29
+                                                lineNumber: 30
                                             },
                                             __self: this,
                                             children: movie.Title
@@ -42401,6 +42403,13 @@ let matchStateToProps = (state)=>{
 exports.default = _reactRedux.connect(matchStateToProps, {
     setUserData: _actions.setUserData
 })(UserInfo);
+UserInfo.propTypes = {
+    movies: _propTypesDefault.default.array,
+    userName: _propTypesDefault.default.string,
+    email: _propTypesDefault.default.string,
+    birthday: _propTypesDefault.default.string,
+    userData: _propTypesDefault.default.object
+};
 var _c;
 $RefreshReg$(_c, "UserInfo");
 
@@ -42409,7 +42418,7 @@ $RefreshReg$(_c, "UserInfo");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-runtime":"8xIwr","react":"6TuXu","react-bootstrap":"h2YVd","moment":"5Keig","@parcel/transformer-js/src/esmodule-helpers.js":"eBqip","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"jVIvJ","react-router-dom":"cpyQW","react-redux":"2L0if","../../actions/actions":"1Ttfj"}],"5Keig":[function(require,module,exports) {
+},{"react/jsx-runtime":"8xIwr","react":"6TuXu","react-bootstrap":"h2YVd","moment":"5Keig","@parcel/transformer-js/src/esmodule-helpers.js":"eBqip","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"jVIvJ","react-router-dom":"cpyQW","react-redux":"2L0if","../../actions/actions":"1Ttfj","prop-types":"1tgq3"}],"5Keig":[function(require,module,exports) {
 (function(global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() : typeof define === 'function' && define.amd ? define(factory) : global.moment = factory();
 })(this, function() {
