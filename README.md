@@ -6,14 +6,14 @@
 
 # Built with Parcel and Deployed on [Netlify](https://myflix-davidcaldwell.netlify.app/)
 
-**This Client leverages a custom RESTful API. Documentation can be found here: https://david-caldwell-myflix.herokuapp.com/documentation**
+**This client leverages a custom RESTful API. Documentation can be found here: https://david-caldwell-myflix.herokuapp.com/documentation**
 
 **User Features**
 - Users can register and login with JWT authentication
 - Users can browse and read about a selection of classic movies
 - Users can add and remove movies to and from their personal list of favorites
 - Users can deregister
-- Client-Side and Server-Side form validation
+- Client-side and server-side form validation
 
 **Technologies Used:**
 - React.js
