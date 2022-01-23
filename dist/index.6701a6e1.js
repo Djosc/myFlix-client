@@ -42272,19 +42272,20 @@ var _propTypes = require("prop-types");
 var _propTypesDefault = parcelHelpers.interopDefault(_propTypes);
 var _reactRedux = require("react-redux");
 var _actions = require("../../actions/actions");
+var _userInfoScss = require("./user-info.scss");
 function UserInfo({ movies , userName , email , birthday , userData  }) {
     return(/*#__PURE__*/ _jsxRuntime.jsxs(_jsxRuntime.Fragment, {
         children: [
             /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Card, {
                 __source: {
                     fileName: "src/components/profile-view/user-info.jsx",
-                    lineNumber: 13
+                    lineNumber: 14
                 },
                 __self: this,
                 children: /*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Card.Body, {
                     __source: {
                         fileName: "src/components/profile-view/user-info.jsx",
-                        lineNumber: 14
+                        lineNumber: 15
                     },
                     __self: this,
                     children: [
@@ -42292,7 +42293,7 @@ function UserInfo({ movies , userName , email , birthday , userData  }) {
                             className: "text-center",
                             __source: {
                                 fileName: "src/components/profile-view/user-info.jsx",
-                                lineNumber: 15
+                                lineNumber: 16
                             },
                             __self: this,
                             children: "Account Details"
@@ -42300,7 +42301,7 @@ function UserInfo({ movies , userName , email , birthday , userData  }) {
                         /*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Card.Text, {
                             __source: {
                                 fileName: "src/components/profile-view/user-info.jsx",
-                                lineNumber: 16
+                                lineNumber: 17
                             },
                             __self: this,
                             children: [
@@ -42311,7 +42312,7 @@ function UserInfo({ movies , userName , email , birthday , userData  }) {
                         /*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Card.Text, {
                             __source: {
                                 fileName: "src/components/profile-view/user-info.jsx",
-                                lineNumber: 17
+                                lineNumber: 18
                             },
                             __self: this,
                             children: [
@@ -42322,7 +42323,7 @@ function UserInfo({ movies , userName , email , birthday , userData  }) {
                         /*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Card.Text, {
                             __source: {
                                 fileName: "src/components/profile-view/user-info.jsx",
-                                lineNumber: 18
+                                lineNumber: 19
                             },
                             __self: this,
                             children: [
@@ -42333,75 +42334,73 @@ function UserInfo({ movies , userName , email , birthday , userData  }) {
                     ]
                 })
             }),
-            /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Card, {
+            /*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Card, {
                 __source: {
                     fileName: "src/components/profile-view/user-info.jsx",
-                    lineNumber: 21
+                    lineNumber: 24
                 },
                 __self: this,
-                children: /*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Card.Body, {
-                    __source: {
-                        fileName: "src/components/profile-view/user-info.jsx",
-                        lineNumber: 22
-                    },
-                    __self: this,
-                    children: [
-                        /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Card.Header, {
-                            className: "text-center",
-                            __source: {
-                                fileName: "src/components/profile-view/user-info.jsx",
-                                lineNumber: 23
-                            },
-                            __self: this,
-                            children: "Favorite Movies"
-                        }),
-                        /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.ListGroup, {
-                            className: "text-center",
-                            __source: {
-                                fileName: "src/components/profile-view/user-info.jsx",
-                                lineNumber: 24
-                            },
-                            __self: this,
-                            children: userData.FavoriteMovies.map((favId, index)=>{
-                                let movie = movies.find((m)=>m._id === favId
-                                );
-                                return(/*#__PURE__*/ _jsxRuntime.jsxs(_reactRouterDom.Link, {
-                                    to: `/movies/${favId}`,
+                children: [
+                    /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Card.Title, {
+                        className: "text-center",
+                        __source: {
+                            fileName: "src/components/profile-view/user-info.jsx",
+                            lineNumber: 25
+                        },
+                        __self: this,
+                        children: "Favorite Movies"
+                    }),
+                    /*#__PURE__*/ _jsxRuntime.jsx("div", {
+                        className: "",
+                        __source: {
+                            fileName: "src/components/profile-view/user-info.jsx",
+                            lineNumber: 27
+                        },
+                        __self: this,
+                        children: userData.FavoriteMovies.map((favId, index)=>{
+                            let movie = movies.find((m)=>m._id === favId
+                            );
+                            return(/*#__PURE__*/ _jsxRuntime.jsx(_reactRouterDom.Link, {
+                                to: `/movies/${favId}`,
+                                __source: {
+                                    fileName: "src/components/profile-view/user-info.jsx",
+                                    lineNumber: 31
+                                },
+                                __self: this,
+                                children: /*#__PURE__*/ _jsxRuntime.jsx("img", {
+                                    src: movie.ImagePath,
+                                    alt: "favorite movies image",
+                                    crossOrigin: "anonymous",
+                                    className: "fav-movies__image",
+                                    style: {
+                                        height: '300px',
+                                        width: '33.3%'
+                                    },
                                     __source: {
                                         fileName: "src/components/profile-view/user-info.jsx",
-                                        lineNumber: 28
+                                        lineNumber: 32
                                     },
-                                    __self: this,
-                                    children: [
-                                        ' ',
-                                        /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.ListGroup.Item, {
-                                            __source: {
-                                                fileName: "src/components/profile-view/user-info.jsx",
-                                                lineNumber: 30
-                                            },
-                                            __self: this,
-                                            children: movie.Title
-                                        }, index),
-                                        ' '
-                                    ]
-                                }, index));
-                            })
+                                    __self: this
+                                }, index)
+                            }, index));
                         })
-                    ]
-                })
+                    })
+                ]
             })
         ]
     }));
 }
 _c = UserInfo;
 let matchStateToProps = (state)=>{
-    const { userData  } = state;
+    const { userData , movies  } = state;
     return {
-        userData
+        userData,
+        movies
     };
 };
 exports.default = _reactRedux.connect(matchStateToProps, {
-    setUserData: _actions.setUserData
+    setUserData: _actions.setUserData,
+    setMovies: _actions.setMovies
 })(UserInfo);
 UserInfo.propTypes = {
     movies: _propTypesDefault.default.array,
@@ -42418,7 +42417,7 @@ $RefreshReg$(_c, "UserInfo");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-runtime":"8xIwr","react":"6TuXu","react-bootstrap":"h2YVd","moment":"5Keig","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"5V79J","react-router-dom":"cpyQW","prop-types":"1tgq3","react-redux":"2L0if","../../actions/actions":"1Ttfj"}],"5Keig":[function(require,module,exports) {
+},{"react/jsx-runtime":"8xIwr","react":"6TuXu","react-bootstrap":"h2YVd","moment":"5Keig","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"5V79J","react-router-dom":"cpyQW","prop-types":"1tgq3","react-redux":"2L0if","../../actions/actions":"1Ttfj","./user-info.scss":"bNiPN"}],"5Keig":[function(require,module,exports) {
 (function(global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() : typeof define === 'function' && define.amd ? define(factory) : global.moment = factory();
 })(this, function() {
@@ -46140,7 +46139,7 @@ $RefreshReg$(_c, "UserInfo");
     return hooks;
 });
 
-},{}],"gb0ga":[function() {},{}],"63yS7":[function(require,module,exports) {
+},{}],"bNiPN":[function() {},{}],"gb0ga":[function() {},{}],"63yS7":[function(require,module,exports) {
 var $parcel$ReactRefreshHelpers$1bb2 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
@@ -46438,7 +46437,7 @@ function MoviesList(props) {
                     __self: this
                 })
             }),
-            filteredMovies.map((m)=>/*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Col, {
+            filteredMovies.map((m, index)=>/*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Col, {
                     lg: 3,
                     md: 4,
                     sm: 6,
@@ -46455,7 +46454,7 @@ function MoviesList(props) {
                         },
                         __self: this
                     })
-                }, m._id)
+                }, index)
             )
         ]
     }));

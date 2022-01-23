@@ -30,8 +30,8 @@ function MoviesList(props) {
 			<Col md={12} className="mb-4">
 				<VisibilityFilterInput visibilityFilter={visibilityFilter} />
 			</Col>
-			{filteredMovies.map((m) => (
-				<Col lg={3} md={4} sm={6} key={m._id}>
+			{filteredMovies.map((m, index) => (
+				<Col lg={3} md={4} sm={6} key={index}>
 					<MovieCard movie={m} />
 				</Col>
 			))}

@@ -5,7 +5,8 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
-import { setUserData } from '../../actions/actions';
+import { setUserData, setMovies } from '../../actions/actions';
+import './user-info.scss';
 
 function UserInfo({ movies, userName, email, birthday, userData }) {
 	return (
@@ -18,32 +19,45 @@ function UserInfo({ movies, userName, email, birthday, userData }) {
 					<Card.Text>Birthday: {moment.utc(birthday).format('MM-DD-YYYY')}</Card.Text>
 				</Card.Body>
 			</Card>
+			{/* <Container>
+				<Row> */}
 			<Card>
-				<Card.Body>
-					<Card.Header className="text-center">Favorite Movies</Card.Header>
-					<ListGroup className="text-center">
-						{userData.FavoriteMovies.map((favId, index) => {
-							let movie = movies.find((m) => m._id === favId);
-							return (
-								<Link key={index} to={`/movies/${favId}`}>
-									{' '}
-									<ListGroup.Item key={index}>{movie.Title}</ListGroup.Item>{' '}
-								</Link>
-							);
-						})}
-					</ListGroup>
-				</Card.Body>
+				<Card.Title className="text-center">Favorite Movies</Card.Title>
+				{/* <ListGroup horizontal className="fav-movies text-center"> */}
+				<div className="">
+					{userData.FavoriteMovies.map((favId, index) => {
+						let movie = movies.find((m) => m._id === favId);
+						return (
+							<Link key={index} to={`/movies/${favId}`}>
+								<img
+									key={index}
+									src={movie.ImagePath}
+									alt="favorite movies image"
+									crossOrigin="anonymous"
+									className="fav-movies__image"
+									style={{
+										height: '300px',
+										width: '33.3%',
+									}}
+								/>
+							</Link>
+						);
+					})}
+				</div>
+				{/* </ListGroup> */}
 			</Card>
+			{/* </Row>
+			</Container> */}
 		</>
 	);
 }
 
 let matchStateToProps = (state) => {
-	const { userData } = state;
-	return { userData };
+	const { userData, movies } = state;
+	return { userData, movies };
 };
 
-export default connect(matchStateToProps, { setUserData })(UserInfo);
+export default connect(matchStateToProps, { setUserData, setMovies })(UserInfo);
 
 UserInfo.propTypes = {
 	movies: PropTypes.array,

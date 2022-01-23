@@ -2,6 +2,9 @@
 body {
   font-family: "Work Sans", sans-serif;
 }
+.fav-movies__image:hover {
+  transform: scale(1.05);
+}
 .back-button {
   width: 200px;
   left: 4rem;
