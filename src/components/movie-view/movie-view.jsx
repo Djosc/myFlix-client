@@ -60,11 +60,11 @@ function MovieView({ movie, user, userData, onBackClick }) {
 
 	return (
 		<Container className="movie-view">
-			<Row>
-				<Col>
+			<Row className="justify-content-center">
+				<Col xs={12} sm={10} md={10} lg={6}>
 					<img src={movie.ImagePath} crossOrigin="anonymous" style={{ width: '100%' }} />
 				</Col>
-				<Col className="text-center">
+				<Col xs={10} sm={8} md={10} lg={6} className="text-center">
 					<Stack gap={4} className="row-xs-3" style={{ marginTop: '20%' }}>
 						<div className="movie-title">
 							<h2>{movie.Title}</h2>
@@ -104,7 +104,7 @@ function MovieView({ movie, user, userData, onBackClick }) {
 							</Button>
 						)}
 						<Button
-							className="mt-4"
+							className="mt-4 mb-4"
 							variant="primary"
 							size="lg"
 							onClick={() => {

@@ -21,7 +21,7 @@ function UserInfo({ movies, userName, email, birthday, userData }) {
 			</Card>
 			{/* <Container>
 				<Row> */}
-			<Card>
+			<Card className="mt-3 pt-3">
 				<Card.Title className="text-center">Favorite Movies</Card.Title>
 				{/* <ListGroup horizontal className="fav-movies text-center"> */}
 				<div className="">

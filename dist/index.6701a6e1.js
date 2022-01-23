@@ -23333,6 +23333,7 @@ function MovieView({ movie , user , userData , onBackClick  }) {
         },
         __self: this,
         children: /*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Row, {
+            className: "justify-content-center",
             __source: {
                 fileName: "src/components/movie-view/movie-view.jsx",
                 lineNumber: 63
@@ -23340,6 +23341,10 @@ function MovieView({ movie , user , userData , onBackClick  }) {
             __self: this,
             children: [
                 /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Col, {
+                    xs: 12,
+                    sm: 10,
+                    md: 10,
+                    lg: 6,
                     __source: {
                         fileName: "src/components/movie-view/movie-view.jsx",
                         lineNumber: 64
@@ -23359,6 +23364,10 @@ function MovieView({ movie , user , userData , onBackClick  }) {
                     })
                 }),
                 /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Col, {
+                    xs: 10,
+                    sm: 8,
+                    md: 10,
+                    lg: 6,
                     className: "text-center",
                     __source: {
                         fileName: "src/components/movie-view/movie-view.jsx",
@@ -23508,7 +23517,7 @@ function MovieView({ movie , user , userData , onBackClick  }) {
                                 children: "Add to Favorites"
                             }),
                             /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Button, {
-                                className: "mt-4",
+                                className: "mt-4 mb-4",
                                 variant: "primary",
                                 size: "lg",
                                 onClick: ()=>{
@@ -42335,6 +42344,7 @@ function UserInfo({ movies , userName , email , birthday , userData  }) {
                 })
             }),
             /*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Card, {
+                className: "mt-3 pt-3",
                 __source: {
                     fileName: "src/components/profile-view/user-info.jsx",
                     lineNumber: 24
