@@ -17,10 +17,34 @@ body {
     position: static;
   }
 }
-.movie-card {
+.movie__movie-card {
   box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);
 }
-.movie-card:hover {
+.movie__movie-card:hover {
   transform: scale(1.02);
+}
+
+.movie__card-link {
+  text-decoration: none;
+  color: #000;
+}
+
+.movie__card-title {
+  text-decoration: none;
+  padding-top: 1.5rem;
+  font-size: 20px;
+}
+
+.movie__card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 168px;
+}
+
+.movie__card-button {
+  bottom: 0.5rem;
+  left: 50%;
 }
 /*# sourceMappingURL=index.caa67093.css.map */

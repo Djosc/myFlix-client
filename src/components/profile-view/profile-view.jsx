@@ -212,6 +212,6 @@ ProfileView.propTypes = {
 	movies: PropTypes.array,
 	onBackClick: PropTypes.func,
 	user: PropTypes.bool,
-	userData: PropTypes.object,
+	userData: PropTypes.any,
 	setUserData: PropTypes.func,
 };

@@ -35,16 +35,13 @@ class MainView extends React.Component {
 			this.setState({
 				user: localStorage.getItem('user'),
 			});
-			this.getMovies(authToken);
-			this.getUserData(authToken);
+			// this.getMovies(authToken);
+			// this.getUserData(authToken);
+			// console.log(this.props.userData);
 		}
 	}
 
-	/**
-	 * Making movie data and user data axios calls from the main-view(upper-level component)
-	 * then passing down as props to other views.
-	 */
-	getMovies(token) {
+	async getMovies(token) {
 		axios
 			.get('https://david-caldwell-myflix.herokuapp.com/movies', {
 				headers: { Authorization: `Bearer ${token}` },
@@ -57,7 +54,7 @@ class MainView extends React.Component {
 			});
 	}
 
-	getUserData(token) {
+	async getUserData(token) {
 		const username = localStorage.getItem('user');
 		// const username = this.state.user;
 		axios
@@ -73,6 +70,7 @@ class MainView extends React.Component {
 					FavoriteMovies: response.data.FavoriteMovies,
 				});
 				localStorage.setItem('userData', JSON.stringify(response.data));
+				console.log(this.props.userData);
 			})
 			.catch((err) => console.log(err));
 	}
@@ -108,6 +106,7 @@ class MainView extends React.Component {
 		localStorage.setItem('token', authData.token);
 		localStorage.setItem('user', authData.user.Username);
 		this.getMovies(authData.token);
+		this.getUserData(authData.token);
 	}
 
 	onRegister(registered) {

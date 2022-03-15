@@ -21,5 +21,6 @@ export function updateUser(value) {
 }
 
 export function setUserData(value) {
+	console.log('Set userData triggered');
 	return { type: SET_USERDATA, value };
 }

@@ -40,8 +40,10 @@ function user(state = '', action) {
 function userData(state = [], action) {
 	switch (action.type) {
 		case SET_USERDATA:
+			console.log('Set userData action triggered: ', action.value);
 			return action.value;
 		default:
+			// console.log('Set userData action default triggered: ', state);
 			return state;
 	}
 }
