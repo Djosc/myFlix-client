@@ -1,14 +1,17 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import { Row, Col, Button, Container, Stack } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import { setUserData } from '../../actions/actions';
 
 function MovieView({ movie, user, userData, onBackClick }) {
+	const dispatch = useDispatch();
+
 	const clicked = userData.FavoriteMovies.includes(movie._id) ? true : false;
+
 	const [favorited, setFavorited] = useState(clicked);
 
 	const addMovieToFavorites = (movie) => {
@@ -26,9 +29,15 @@ function MovieView({ movie, user, userData, onBackClick }) {
 			)
 			.then((response) => {
 				setFavorited(!favorited);
-				setUserData({
-					FavoriteMovies: response.data.FavoriteMovies,
-				});
+				dispatch(
+					setUserData({
+						Username: response.data.Username,
+						Password: response.data.Password,
+						Email: response.data.Email,
+						Birthday: response.data.Birthday,
+						FavoriteMovies: response.data.FavoriteMovies,
+					})
+				);
 			})
 			.catch((err) => console.log(err));
 	};
@@ -47,9 +56,16 @@ function MovieView({ movie, user, userData, onBackClick }) {
 			)
 			.then((response) => {
 				setFavorited(!favorited);
-				setUserData({
-					FavoriteMovies: response.data.FavoriteMovies,
-				});
+				console.log(response.data);
+				dispatch(
+					setUserData({
+						Username: response.data.Username,
+						Password: response.data.Password,
+						Email: response.data.Email,
+						Birthday: response.data.Birthday,
+						FavoriteMovies: response.data.FavoriteMovies,
+					})
+				);
 			})
 			.catch((err) => {
 				console.error(err);
@@ -142,6 +158,7 @@ MovieView.propTypes = {
 };
 
 let mapStateToProps = (state) => {
+	// console.log(state.userData);
 	return { userData: state.userData };
 };
 

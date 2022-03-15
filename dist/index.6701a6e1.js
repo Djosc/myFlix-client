@@ -22978,18 +22978,11 @@ class MainView extends _reactDefault.default.Component {
     }
     componentDidMount() {
         let authToken = localStorage.getItem('token');
-        if (authToken !== null) {
-            this.setState({
-                user: localStorage.getItem('user')
-            });
-            this.getMovies(authToken);
-            this.getUserData(authToken);
-        }
+        if (authToken !== null) this.setState({
+            user: localStorage.getItem('user')
+        });
     }
-    /**
-	 * Making movie data and user data axios calls from the main-view(upper-level component)
-	 * then passing down as props to other views.
-	 */ getMovies(token) {
+    async getMovies(token) {
         _axiosDefault.default.get('https://david-caldwell-myflix.herokuapp.com/movies', {
             headers: {
                 Authorization: `Bearer ${token}`
@@ -23000,7 +22993,7 @@ class MainView extends _reactDefault.default.Component {
             console.log(error);
         });
     }
-    getUserData(token) {
+    async getUserData(token) {
         const username = localStorage.getItem('user');
         // const username = this.state.user;
         _axiosDefault.default.get(`https://david-caldwell-myflix.herokuapp.com/users/${username}`, {
@@ -23016,6 +23009,7 @@ class MainView extends _reactDefault.default.Component {
                 FavoriteMovies: response.data.FavoriteMovies
             });
             localStorage.setItem('userData', JSON.stringify(response.data));
+            console.log(this.props.userData);
         }).catch((err)=>console.log(err)
         );
     }
@@ -23045,6 +23039,7 @@ class MainView extends _reactDefault.default.Component {
         localStorage.setItem('token', authData.token);
         localStorage.setItem('user', authData.user.Username);
         this.getMovies(authData.token);
+        this.getUserData(authData.token);
     }
     onRegister(registered) {
         this.setState({
@@ -23057,7 +23052,7 @@ class MainView extends _reactDefault.default.Component {
         return(/*#__PURE__*/ _jsxRuntime.jsxs(_reactRouterDom.BrowserRouter, {
             __source: {
                 fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 124
+                lineNumber: 123
             },
             __self: this,
             children: [
@@ -23065,7 +23060,7 @@ class MainView extends _reactDefault.default.Component {
                     user: user,
                     __source: {
                         fileName: "src/components/main-view/main-view.jsx",
-                        lineNumber: 125
+                        lineNumber: 124
                     },
                     __self: this
                 }),
@@ -23075,14 +23070,14 @@ class MainView extends _reactDefault.default.Component {
                     },
                     __source: {
                         fileName: "src/components/main-view/main-view.jsx",
-                        lineNumber: 126
+                        lineNumber: 125
                     },
                     __self: this,
                     children: /*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Row, {
                         className: "main-view justify-content-md-center mt-4 pt-2",
                         __source: {
                             fileName: "src/components/main-view/main-view.jsx",
-                            lineNumber: 127
+                            lineNumber: 126
                         },
                         __self: this,
                         children: [
@@ -23102,7 +23097,7 @@ class MainView extends _reactDefault.default.Component {
                                 },
                                 __source: {
                                     fileName: "src/components/main-view/main-view.jsx",
-                                    lineNumber: 128
+                                    lineNumber: 127
                                 },
                                 __self: this
                             }),
@@ -23119,7 +23114,7 @@ class MainView extends _reactDefault.default.Component {
                                 },
                                 __source: {
                                     fileName: "src/components/main-view/main-view.jsx",
-                                    lineNumber: 139
+                                    lineNumber: 138
                                 },
                                 __self: this
                             }),
@@ -23146,7 +23141,7 @@ class MainView extends _reactDefault.default.Component {
                                 },
                                 __source: {
                                     fileName: "src/components/main-view/main-view.jsx",
-                                    lineNumber: 151
+                                    lineNumber: 150
                                 },
                                 __self: this
                             }),
@@ -23173,7 +23168,7 @@ class MainView extends _reactDefault.default.Component {
                                 },
                                 __source: {
                                     fileName: "src/components/main-view/main-view.jsx",
-                                    lineNumber: 170
+                                    lineNumber: 169
                                 },
                                 __self: this
                             }),
@@ -23200,7 +23195,7 @@ class MainView extends _reactDefault.default.Component {
                                 },
                                 __source: {
                                     fileName: "src/components/main-view/main-view.jsx",
-                                    lineNumber: 190
+                                    lineNumber: 189
                                 },
                                 __self: this
                             }),
@@ -23225,7 +23220,7 @@ class MainView extends _reactDefault.default.Component {
                                 },
                                 __source: {
                                     fileName: "src/components/main-view/main-view.jsx",
-                                    lineNumber: 208
+                                    lineNumber: 207
                                 },
                                 __self: this
                             })
@@ -23281,6 +23276,7 @@ var _actions = require("../../actions/actions");
 var _s = $RefreshSig$();
 function MovieView({ movie , user , userData , onBackClick  }) {
     _s();
+    const dispatch = _reactRedux.useDispatch();
     const clicked = userData.FavoriteMovies.includes(movie._id) ? true : false;
     const [favorited, setFavorited] = _react.useState(clicked);
     const addMovieToFavorites = (movie1)=>{
@@ -23294,9 +23290,13 @@ function MovieView({ movie , user , userData , onBackClick  }) {
             method: 'POST'
         }).then((response)=>{
             setFavorited(!favorited);
-            _actions.setUserData({
+            dispatch(_actions.setUserData({
+                Username: response.data.Username,
+                Password: response.data.Password,
+                Email: response.data.Email,
+                Birthday: response.data.Birthday,
                 FavoriteMovies: response.data.FavoriteMovies
-            });
+            }));
         }).catch((err)=>console.log(err)
         );
     };
@@ -23310,9 +23310,14 @@ function MovieView({ movie , user , userData , onBackClick  }) {
             method: 'DELETE'
         }).then((response)=>{
             setFavorited(!favorited);
-            _actions.setUserData({
+            console.log(response.data);
+            dispatch(_actions.setUserData({
+                Username: response.data.Username,
+                Password: response.data.Password,
+                Email: response.data.Email,
+                Birthday: response.data.Birthday,
                 FavoriteMovies: response.data.FavoriteMovies
-            });
+            }));
         }).catch((err)=>{
             console.error(err);
         });
@@ -23320,7 +23325,7 @@ function MovieView({ movie , user , userData , onBackClick  }) {
     if (movie.length === 0) return(/*#__PURE__*/ _jsxRuntime.jsx("div", {
         __source: {
             fileName: "src/components/movie-view/movie-view.jsx",
-            lineNumber: 59
+            lineNumber: 75
         },
         __self: this,
         children: "No movies to display."
@@ -23329,14 +23334,14 @@ function MovieView({ movie , user , userData , onBackClick  }) {
         className: "movie-view",
         __source: {
             fileName: "src/components/movie-view/movie-view.jsx",
-            lineNumber: 62
+            lineNumber: 78
         },
         __self: this,
         children: /*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Row, {
             className: "justify-content-center",
             __source: {
                 fileName: "src/components/movie-view/movie-view.jsx",
-                lineNumber: 63
+                lineNumber: 79
             },
             __self: this,
             children: [
@@ -23347,7 +23352,7 @@ function MovieView({ movie , user , userData , onBackClick  }) {
                     lg: 6,
                     __source: {
                         fileName: "src/components/movie-view/movie-view.jsx",
-                        lineNumber: 64
+                        lineNumber: 80
                     },
                     __self: this,
                     children: /*#__PURE__*/ _jsxRuntime.jsx("img", {
@@ -23358,7 +23363,7 @@ function MovieView({ movie , user , userData , onBackClick  }) {
                         },
                         __source: {
                             fileName: "src/components/movie-view/movie-view.jsx",
-                            lineNumber: 65
+                            lineNumber: 81
                         },
                         __self: this
                     })
@@ -23371,7 +23376,7 @@ function MovieView({ movie , user , userData , onBackClick  }) {
                     className: "text-center",
                     __source: {
                         fileName: "src/components/movie-view/movie-view.jsx",
-                        lineNumber: 67
+                        lineNumber: 83
                     },
                     __self: this,
                     children: /*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Stack, {
@@ -23382,7 +23387,7 @@ function MovieView({ movie , user , userData , onBackClick  }) {
                         },
                         __source: {
                             fileName: "src/components/movie-view/movie-view.jsx",
-                            lineNumber: 68
+                            lineNumber: 84
                         },
                         __self: this,
                         children: [
@@ -23390,13 +23395,13 @@ function MovieView({ movie , user , userData , onBackClick  }) {
                                 className: "movie-title",
                                 __source: {
                                     fileName: "src/components/movie-view/movie-view.jsx",
-                                    lineNumber: 69
+                                    lineNumber: 85
                                 },
                                 __self: this,
                                 children: /*#__PURE__*/ _jsxRuntime.jsx("h2", {
                                     __source: {
                                         fileName: "src/components/movie-view/movie-view.jsx",
-                                        lineNumber: 70
+                                        lineNumber: 86
                                     },
                                     __self: this,
                                     children: movie.Title
@@ -23406,7 +23411,7 @@ function MovieView({ movie , user , userData , onBackClick  }) {
                                 className: "movie-director",
                                 __source: {
                                     fileName: "src/components/movie-view/movie-view.jsx",
-                                    lineNumber: 72
+                                    lineNumber: 88
                                 },
                                 __self: this,
                                 children: [
@@ -23414,7 +23419,7 @@ function MovieView({ movie , user , userData , onBackClick  }) {
                                         className: "label",
                                         __source: {
                                             fileName: "src/components/movie-view/movie-view.jsx",
-                                            lineNumber: 73
+                                            lineNumber: 89
                                         },
                                         __self: this,
                                         children: "Directed by:"
@@ -23423,14 +23428,14 @@ function MovieView({ movie , user , userData , onBackClick  }) {
                                         to: `/directors/${movie.Director.Name}`,
                                         __source: {
                                             fileName: "src/components/movie-view/movie-view.jsx",
-                                            lineNumber: 74
+                                            lineNumber: 90
                                         },
                                         __self: this,
                                         children: /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Button, {
                                             variant: "link",
                                             __source: {
                                                 fileName: "src/components/movie-view/movie-view.jsx",
-                                                lineNumber: 75
+                                                lineNumber: 91
                                             },
                                             __self: this,
                                             children: movie.Director.Name
@@ -23442,7 +23447,7 @@ function MovieView({ movie , user , userData , onBackClick  }) {
                                 className: "movie-genre",
                                 __source: {
                                     fileName: "src/components/movie-view/movie-view.jsx",
-                                    lineNumber: 78
+                                    lineNumber: 94
                                 },
                                 __self: this,
                                 children: [
@@ -23450,7 +23455,7 @@ function MovieView({ movie , user , userData , onBackClick  }) {
                                         className: "label",
                                         __source: {
                                             fileName: "src/components/movie-view/movie-view.jsx",
-                                            lineNumber: 79
+                                            lineNumber: 95
                                         },
                                         __self: this,
                                         children: "Genre:"
@@ -23459,14 +23464,14 @@ function MovieView({ movie , user , userData , onBackClick  }) {
                                         to: `/genres/${movie.Genre.Name}`,
                                         __source: {
                                             fileName: "src/components/movie-view/movie-view.jsx",
-                                            lineNumber: 80
+                                            lineNumber: 96
                                         },
                                         __self: this,
                                         children: /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Button, {
                                             variant: "link",
                                             __source: {
                                                 fileName: "src/components/movie-view/movie-view.jsx",
-                                                lineNumber: 81
+                                                lineNumber: 97
                                             },
                                             __self: this,
                                             children: movie.Genre.Name
@@ -23478,14 +23483,14 @@ function MovieView({ movie , user , userData , onBackClick  }) {
                                 className: "movie-description",
                                 __source: {
                                     fileName: "src/components/movie-view/movie-view.jsx",
-                                    lineNumber: 84
+                                    lineNumber: 100
                                 },
                                 __self: this,
                                 children: /*#__PURE__*/ _jsxRuntime.jsx("span", {
                                     className: "value",
                                     __source: {
                                         fileName: "src/components/movie-view/movie-view.jsx",
-                                        lineNumber: 85
+                                        lineNumber: 101
                                     },
                                     __self: this,
                                     children: movie.Description
@@ -23499,7 +23504,7 @@ function MovieView({ movie , user , userData , onBackClick  }) {
                                 ,
                                 __source: {
                                     fileName: "src/components/movie-view/movie-view.jsx",
-                                    lineNumber: 88
+                                    lineNumber: 104
                                 },
                                 __self: this,
                                 children: "Remove from Favorites"
@@ -23511,7 +23516,7 @@ function MovieView({ movie , user , userData , onBackClick  }) {
                                 ,
                                 __source: {
                                     fileName: "src/components/movie-view/movie-view.jsx",
-                                    lineNumber: 97
+                                    lineNumber: 113
                                 },
                                 __self: this,
                                 children: "Add to Favorites"
@@ -23525,7 +23530,7 @@ function MovieView({ movie , user , userData , onBackClick  }) {
                                 },
                                 __source: {
                                     fileName: "src/components/movie-view/movie-view.jsx",
-                                    lineNumber: 106
+                                    lineNumber: 122
                                 },
                                 __self: this,
                                 children: "Back"
@@ -23537,7 +23542,9 @@ function MovieView({ movie , user , userData , onBackClick  }) {
         })
     }));
 }
-_s(MovieView, "hYnAqdrepJJ0If9yAPPAmZJ3qOw=");
+_s(MovieView, "RMS8EpxUomTrEaUhqSmOCFFPXkw=", false, function() {
+    return [_reactRedux.useDispatch];
+});
 _c = MovieView;
 MovieView.propTypes = {
     movie: _propTypesDefault.default.shape({
@@ -23560,6 +23567,7 @@ MovieView.propTypes = {
     setUserData: _propTypesDefault.default.func
 };
 let mapStateToProps = (state)=>{
+    // console.log(state.userData);
     return {
         userData: state.userData
     };
@@ -41264,6 +41272,7 @@ function updateUser(value) {
     };
 }
 function setUserData(value) {
+    console.log('Set userData triggered');
     return {
         type: SET_USERDATA,
         value
@@ -42250,7 +42259,7 @@ ProfileView.propTypes = {
     movies: _propTypesDefault.default.array,
     onBackClick: _propTypesDefault.default.func,
     user: _propTypesDefault.default.bool,
-    userData: _propTypesDefault.default.object,
+    userData: _propTypesDefault.default.any,
     setUserData: _propTypesDefault.default.func
 };
 var _c;
@@ -48237,8 +48246,10 @@ function user(state = '', action) {
 function userData(state = [], action) {
     switch(action.type){
         case _actions.SET_USERDATA:
+            console.log('Set userData action triggered: ', action.value);
             return action.value;
         default:
+            // console.log('Set userData action default triggered: ', state);
             return state;
     }
 }
