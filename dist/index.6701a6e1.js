@@ -46517,13 +46517,14 @@ class MovieCard extends _reactDefault.default.Component {
         const { movie  } = this.props;
         return(/*#__PURE__*/ _jsxRuntime.jsx(_reactRouterDom.Link, {
             to: `/movies/${movie._id}`,
+            className: "movie__card-link",
             __source: {
                 fileName: "src/components/movie-card/movie-card.jsx",
                 lineNumber: 15
             },
             __self: this,
             children: /*#__PURE__*/ _jsxRuntime.jsxs(_cardDefault.default, {
-                className: "movie-card mb-4",
+                className: "movie__movie-card mb-4",
                 __source: {
                     fileName: "src/components/movie-card/movie-card.jsx",
                     lineNumber: 16
@@ -46531,10 +46532,12 @@ class MovieCard extends _reactDefault.default.Component {
                 __self: this,
                 children: [
                     /*#__PURE__*/ _jsxRuntime.jsx(_cardDefault.default.Img, {
-                        style: {
-                            height: '500px'
-                        },
                         variant: "top",
+                        className: "movie__card-image",
+                        style: {
+                            minHeight: '475px',
+                            maxHeight: '475px'
+                        },
                         src: movie.ImagePath,
                         crossOrigin: "anonymous",
                         __source: {
@@ -46544,27 +46547,28 @@ class MovieCard extends _reactDefault.default.Component {
                         __self: this
                     }),
                     /*#__PURE__*/ _jsxRuntime.jsxs(_cardDefault.default.Body, {
-                        className: "text-center",
+                        className: "text-center movie__card-body",
                         __source: {
                             fileName: "src/components/movie-card/movie-card.jsx",
-                            lineNumber: 23
+                            lineNumber: 24
                         },
                         __self: this,
                         children: [
                             /*#__PURE__*/ _jsxRuntime.jsx(_cardDefault.default.Title, {
+                                className: "movie__card-title",
                                 __source: {
                                     fileName: "src/components/movie-card/movie-card.jsx",
-                                    lineNumber: 24
+                                    lineNumber: 25
                                 },
                                 __self: this,
                                 children: movie.Title
                             }),
                             /*#__PURE__*/ _jsxRuntime.jsx(_buttonDefault.default, {
                                 variant: "primary",
-                                className: "mt-3",
+                                className: "mt-3 movie__card-button",
                                 __source: {
                                     fileName: "src/components/movie-card/movie-card.jsx",
-                                    lineNumber: 25
+                                    lineNumber: 26
                                 },
                                 __self: this,
                                 children: "More Info"
